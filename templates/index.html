@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard | Social Dog</title>
+    <link
+      rel="shortcut icon"
+      href="assets/img/logo_nav.png"
+      type="image/x-icon"
+    />
+
+    <!-- Bootstrap Css -->
+    <link
+      rel="stylesheet"
+      href="	https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
+    />
+
+    <!-- Custom Css -->
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+  <body>
+    <section class="sidenav">
+      <ul class="sidenav-left">
+        <li>
+          <div class="logo">
+            <a href="index.html">
+              <img src="assets/img/logo_nav.png" alt="logo" class="img-fluid" />
+            </a>
+          </div>
+        </li>
+        <li class="list active">
+          <a href="#" class="link">
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              data-prefix="fal"
+              data-icon="chart-bar"
+              class="svg-inline--fa fa-chart-bar fa-w-16"
+              role="img"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 512 512"
+            >
+              <path
+                fill="#000"
+                d="M424 352h16c4.4 0 8-3.6 8-8V104c0-4.4-3.6-8-8-8h-16c-4.4 0-8 3.6-8 8v240c0 4.4 3.6 8 8 8zm-96 0h16c4.4 0 8-3.6 8-8V200c0-4.4-3.6-8-8-8h-16c-4.4 0-8 3.6-8 8v144c0 4.4 3.6 8 8 8zm-192 0h16c4.4 0 8-3.6 8-8v-80c0-4.4-3.6-8-8-8h-16c-4.4 0-8 3.6-8 8v80c0 4.4 3.6 8 8 8zm96 0h16c4.4 0 8-3.6 8-8V136c0-4.4-3.6-8-8-8h-16c-4.4 0-8 3.6-8 8v208c0 4.4 3.6 8 8 8zm272 64H32V72c0-4.42-3.58-8-8-8H8c-4.42 0-8 3.58-8 8v360c0 8.84 7.16 16 16 16h488c4.42 0 8-3.58 8-8v-16c0-4.42-3.58-8-8-8z"
+              ></path>
+            </svg>
+            Analytics
+          </a>
+        </li>
+        <li class="list">
+          <a href="#" class="link">
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              data-prefix="fal"
+              data-icon="comment"
+              class="svg-inline--fa fa-comment fa-w-16"
+              role="img"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 512 512"
+            >
+              <path
+                fill="currentColor"
+                d="M256 64c123.5 0 224 79 224 176S379.5 416 256 416c-28.3 0-56.3-4.3-83.2-12.8l-15.2-4.8-13 9.2c-23 16.3-58.5 35.3-102.6 39.6 12-15.1 29.8-40.4 40.8-69.6l7.1-18.7-13.7-14.6C47.3 313.7 32 277.6 32 240c0-97 100.5-176 224-176m0-32C114.6 32 0 125.1 0 240c0 47.6 19.9 91.2 52.9 126.3C38 405.7 7 439.1 6.5 439.5c-6.6 7-8.4 17.2-4.6 26 3.8 8.8 12.4 14.5 22 14.5 61.5 0 110-25.7 139.1-46.3 29 9.1 60.2 14.3 93 14.3 141.4 0 256-93.1 256-208S397.4 32 256 32z"
+              ></path>
+            </svg>
+            Tweet
+          </a>
+        </li>
+        <li class="list">
+          <a href="#" class="link">
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              data-prefix="fal"
+              data-icon="inbox"
+              class="svg-inline--fa fa-inbox fa-w-18"
+              role="img"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 576 512"
+            >
+              <path
+                fill="currentColor"
+                d="M566.819 227.377L462.377 83.768A48.001 48.001 0 0 0 423.557 64H152.443a47.998 47.998 0 0 0-38.819 19.768L9.181 227.377A47.996 47.996 0 0 0 0 255.609V400c0 26.51 21.49 48 48 48h480c26.51 0 48-21.49 48-48V255.609a47.996 47.996 0 0 0-9.181-28.232zM139.503 102.589A16.048 16.048 0 0 1 152.443 96h271.115c5.102 0 9.939 2.463 12.94 6.589L524.796 224H388.223l-32 64H219.777l-32-64H51.204l88.299-121.411zM544 272v128c0 8.823-7.178 16-16 16H48c-8.822 0-16-7.177-16-16V272c0-8.837 7.163-16 16-16h120l32 64h176l32-64h120c8.837 0 16 7.163 16 16z"
+              ></path>
+            </svg>
+            Inbox
+          </a>
+        </li>
+        <li class="list">
+          <a href="#" class="link">
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              data-prefix="fal"
+              data-icon="users"
+              class="svg-inline--fa fa-users fa-w-20"
+              role="img"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 640 512"
+            >
+              <path
+                fill="currentColor"
+                d="M544 224c44.2 0 80-35.8 80-80s-35.8-80-80-80-80 35.8-80 80 35.8 80 80 80zm0-128c26.5 0 48 21.5 48 48s-21.5 48-48 48-48-21.5-48-48 21.5-48 48-48zM320 256c61.9 0 112-50.1 112-112S381.9 32 320 32 208 82.1 208 144s50.1 112 112 112zm0-192c44.1 0 80 35.9 80 80s-35.9 80-80 80-80-35.9-80-80 35.9-80 80-80zm244 192h-40c-15.2 0-29.3 4.8-41.1 12.9 9.4 6.4 17.9 13.9 25.4 22.4 4.9-2.1 10.2-3.3 15.7-3.3h40c24.2 0 44 21.5 44 48 0 8.8 7.2 16 16 16s16-7.2 16-16c0-44.1-34.1-80-76-80zM96 224c44.2 0 80-35.8 80-80s-35.8-80-80-80-80 35.8-80 80 35.8 80 80 80zm0-128c26.5 0 48 21.5 48 48s-21.5 48-48 48-48-21.5-48-48 21.5-48 48-48zm304.1 180c-33.4 0-41.7 12-80.1 12-38.4 0-46.7-12-80.1-12-36.3 0-71.6 16.2-92.3 46.9-12.4 18.4-19.6 40.5-19.6 64.3V432c0 26.5 21.5 48 48 48h288c26.5 0 48-21.5 48-48v-44.8c0-23.8-7.2-45.9-19.6-64.3-20.7-30.7-56-46.9-92.3-46.9zM480 432c0 8.8-7.2 16-16 16H176c-8.8 0-16-7.2-16-16v-44.8c0-16.6 4.9-32.7 14.1-46.4 13.8-20.5 38.4-32.8 65.7-32.8 27.4 0 37.2 12 80.2 12s52.8-12 80.1-12c27.3 0 51.9 12.3 65.7 32.8 9.2 13.7 14.1 29.8 14.1 46.4V432zM157.1 268.9c-11.9-8.1-26-12.9-41.1-12.9H76c-41.9 0-76 35.9-76 80 0 8.8 7.2 16 16 16s16-7.2 16-16c0-26.5 19.8-48 44-48h40c5.5 0 10.8 1.2 15.7 3.3 7.5-8.5 16.1-16 25.4-22.4z"
+              ></path>
+            </svg>
+            Followers
+          </a>
+        </li>
+        <div class="sidenav-left-footer">
+          <li class="list">
+            <a href="#" class="link">
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                data-prefix="fal"
+                data-icon="gem"
+                class="svg-inline--fa fa-gem fa-w-18"
+                role="img"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 576 512"
+              >
+                <path
+                  fill="currentColor"
+                  d="M463.7 0H112.3c-4.2 0-8.1 2.2-10.3 5.8L1.7 168.6c-2.7 4.4-2.2 10.1 1.2 14l276 325.2c4.8 5.6 13.4 5.6 18.2 0l276-325.2c3.4-3.9 3.8-9.6 1.2-14L474 5.8c-2.2-3.6-6.1-5.8-10.3-5.8zm-13.6 36l74.3 124h-83L384.6 36h65.5zM345 36l56.8 124H174.1L231 36h114zm-219.1 0h65.5l-56.8 124h-83l74.3-124zM61.2 192h73L216 384 61.2 192zm112 0h229.5L288 455.8 173.2 192zM360 384l81.8-192h73L360 384z"
+                ></path>
+              </svg>
+              Upgrades
+            </a>
+          </li>
+          <li class="list">
+            <a href="#" class="link"
+              ><svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="30"
+                height="30"
+                fill="currentColor"
+                class="bi bi-question-circle"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+                />
+                <path
+                  d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"
+                /></svg
+            ></a>
+          </li>
+          <li class="list">
+            <a href="#" class="link circle">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="22"
+                height="22"
+                fill="currentColor"
+                class="bi bi-three-dots"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"
+                />
+              </svg>
+            </a>
+          </li>
+        </div>
+      </ul>
+      <ul class="sidenav-right">
+        <div class="profile-info">
+          <div class="icons">
+            <img src="assets/img/avatar6.png" alt="avatar" class="img-fluid" />
+            <div class="action">
+              <a href="#"
+                ><svg
+                  aria-hidden="true"
+                  focusable="false"
+                  data-prefix="fal"
+                  data-icon="sync"
+                  class="svg-inline--fa fa-sync fa-w-16"
+                  role="img"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 512 512"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M492 8h-10c-6.627 0-12 5.373-12 12v110.627C426.929 57.261 347.224 8 256 8 123.228 8 14.824 112.338 8.31 243.493 7.971 250.311 13.475 256 20.301 256h10.016c6.353 0 11.646-4.949 11.977-11.293C48.157 132.216 141.097 42 256 42c82.862 0 154.737 47.077 190.289 116H332c-6.627 0-12 5.373-12 12v10c0 6.627 5.373 12 12 12h160c6.627 0 12-5.373 12-12V20c0-6.627-5.373-12-12-12zm-.301 248h-10.015c-6.352 0-11.647 4.949-11.977 11.293C463.841 380.158 370.546 470 256 470c-82.608 0-154.672-46.952-190.299-116H180c6.627 0 12-5.373 12-12v-10c0-6.627-5.373-12-12-12H20c-6.627 0-12 5.373-12 12v160c0 6.627 5.373 12 12 12h10c6.627 0 12-5.373 12-12V381.373C85.071 454.739 164.777 504 256 504c132.773 0 241.176-104.338 247.69-235.493.339-6.818-5.165-12.507-11.991-12.507z"
+                  ></path></svg
+              ></a>
+              <a href="#">
+                <svg
+                  aria-hidden="true"
+                  focusable="false"
+                  data-prefix="fal"
+                  data-icon="cog"
+                  class="svg-inline--fa fa-cog fa-w-16"
+                  role="img"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 512 512"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M482.696 299.276l-32.61-18.827a195.168 195.168 0 0 0 0-48.899l32.61-18.827c9.576-5.528 14.195-16.902 11.046-27.501-11.214-37.749-31.175-71.728-57.535-99.595-7.634-8.07-19.817-9.836-29.437-4.282l-32.562 18.798a194.125 194.125 0 0 0-42.339-24.48V38.049c0-11.13-7.652-20.804-18.484-23.367-37.644-8.909-77.118-8.91-114.77 0-10.831 2.563-18.484 12.236-18.484 23.367v37.614a194.101 194.101 0 0 0-42.339 24.48L105.23 81.345c-9.621-5.554-21.804-3.788-29.437 4.282-26.36 27.867-46.321 61.847-57.535 99.595-3.149 10.599 1.47 21.972 11.046 27.501l32.61 18.827a195.168 195.168 0 0 0 0 48.899l-32.61 18.827c-9.576 5.528-14.195 16.902-11.046 27.501 11.214 37.748 31.175 71.728 57.535 99.595 7.634 8.07 19.817 9.836 29.437 4.283l32.562-18.798a194.08 194.08 0 0 0 42.339 24.479v37.614c0 11.13 7.652 20.804 18.484 23.367 37.645 8.909 77.118 8.91 114.77 0 10.831-2.563 18.484-12.236 18.484-23.367v-37.614a194.138 194.138 0 0 0 42.339-24.479l32.562 18.798c9.62 5.554 21.803 3.788 29.437-4.283 26.36-27.867 46.321-61.847 57.535-99.595 3.149-10.599-1.47-21.972-11.046-27.501zm-65.479 100.461l-46.309-26.74c-26.988 23.071-36.559 28.876-71.039 41.059v53.479a217.145 217.145 0 0 1-87.738 0v-53.479c-33.621-11.879-43.355-17.395-71.039-41.059l-46.309 26.74c-19.71-22.09-34.689-47.989-43.929-75.958l46.329-26.74c-6.535-35.417-6.538-46.644 0-82.079l-46.329-26.74c9.24-27.969 24.22-53.869 43.929-75.969l46.309 26.76c27.377-23.434 37.063-29.065 71.039-41.069V44.464a216.79 216.79 0 0 1 87.738 0v53.479c33.978 12.005 43.665 17.637 71.039 41.069l46.309-26.76c19.709 22.099 34.689 47.999 43.929 75.969l-46.329 26.74c6.536 35.426 6.538 46.644 0 82.079l46.329 26.74c-9.24 27.968-24.219 53.868-43.929 75.957zM256 160c-52.935 0-96 43.065-96 96s43.065 96 96 96 96-43.065 96-96-43.065-96-96-96zm0 160c-35.29 0-64-28.71-64-64s28.71-64 64-64 64 28.71 64 64-28.71 64-64 64z"
+                  ></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div class="dropdown info">
+            <div
+              class="dropdown-toggle"
+              type="button"
+              data-bs-toggle="dropdown"
+            >
+              <h2>Suhail Habib</h2>
+              <span>@Suhailhabib7 </span>
+            </div>
+            <ul class="dropdown-menu">
+              <li>
+                <a class="dropdown-item" href="#">
+                  <span>
+                    <svg
+                      aria-hidden="true"
+                      focusable="false"
+                      data-prefix="fal"
+                      data-icon="plus"
+                      class="svg-inline--fa fa-plus fa-w-12"
+                      role="img"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 384 512"
+                    >
+                      <path
+                        fill="currentColor"
+                        d="M376 232H216V72c0-4.42-3.58-8-8-8h-32c-4.42 0-8 3.58-8 8v160H8c-4.42 0-8 3.58-8 8v32c0 4.42 3.58 8 8 8h160v160c0 4.42 3.58 8 8 8h32c4.42 0 8-3.58 8-8V280h160c4.42 0 8-3.58 8-8v-32c0-4.42-3.58-8-8-8z"
+                      ></path>
+                    </svg>
+                  </span>
+                  Add a Twitter account
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#">
+                  <span
+                    ><svg
+                      aria-hidden="true"
+                      focusable="false"
+                      data-prefix="fal"
+                      data-icon="cog"
+                      class="svg-inline--fa fa-cog fa-w-16"
+                      role="img"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 512 512"
+                    >
+                      <path
+                        fill="currentColor"
+                        d="M482.696 299.276l-32.61-18.827a195.168 195.168 0 0 0 0-48.899l32.61-18.827c9.576-5.528 14.195-16.902 11.046-27.501-11.214-37.749-31.175-71.728-57.535-99.595-7.634-8.07-19.817-9.836-29.437-4.282l-32.562 18.798a194.125 194.125 0 0 0-42.339-24.48V38.049c0-11.13-7.652-20.804-18.484-23.367-37.644-8.909-77.118-8.91-114.77 0-10.831 2.563-18.484 12.236-18.484 23.367v37.614a194.101 194.101 0 0 0-42.339 24.48L105.23 81.345c-9.621-5.554-21.804-3.788-29.437 4.282-26.36 27.867-46.321 61.847-57.535 99.595-3.149 10.599 1.47 21.972 11.046 27.501l32.61 18.827a195.168 195.168 0 0 0 0 48.899l-32.61 18.827c-9.576 5.528-14.195 16.902-11.046 27.501 11.214 37.748 31.175 71.728 57.535 99.595 7.634 8.07 19.817 9.836 29.437 4.283l32.562-18.798a194.08 194.08 0 0 0 42.339 24.479v37.614c0 11.13 7.652 20.804 18.484 23.367 37.645 8.909 77.118 8.91 114.77 0 10.831-2.563 18.484-12.236 18.484-23.367v-37.614a194.138 194.138 0 0 0 42.339-24.479l32.562 18.798c9.62 5.554 21.803 3.788 29.437-4.283 26.36-27.867 46.321-61.847 57.535-99.595 3.149-10.599-1.47-21.972-11.046-27.501zm-65.479 100.461l-46.309-26.74c-26.988 23.071-36.559 28.876-71.039 41.059v53.479a217.145 217.145 0 0 1-87.738 0v-53.479c-33.621-11.879-43.355-17.395-71.039-41.059l-46.309 26.74c-19.71-22.09-34.689-47.989-43.929-75.958l46.329-26.74c-6.535-35.417-6.538-46.644 0-82.079l-46.329-26.74c9.24-27.969 24.22-53.869 43.929-75.969l46.309 26.76c27.377-23.434 37.063-29.065 71.039-41.069V44.464a216.79 216.79 0 0 1 87.738 0v53.479c33.978 12.005 43.665 17.637 71.039 41.069l46.309-26.76c19.709 22.099 34.689 47.999 43.929 75.969l-46.329 26.74c6.536 35.426 6.538 46.644 0 82.079l46.329 26.74c-9.24 27.968-24.219 53.868-43.929 75.957zM256 160c-52.935 0-96 43.065-96 96s43.065 96 96 96 96-43.065 96-96-43.065-96-96-96zm0 160c-35.29 0-64-28.71-64-64s28.71-64 64-64 64 28.71 64 64-28.71 64-64 64z"
+                      ></path></svg
+                  ></span>
+                  Twitter Accounts
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <ul class="inner">
+          <li class="list">
+            <a href="#" class="link active"> Dashboard</a>
+          </li>
+          <li class="gOuOTI"></li>
+        </ul>
+      </ul>
+    </section>
+
+    <section class="mobile-menu d-block d-lg-none">
+      <nav class="sc-fiTCPU eysins">
+        <div class="sc-kSwzxm dgBuBm">
+          <div data-cypress="open_sidebar_sp" class="sc-cyjdnp coLPUO">
+            <div class="mobile-menu-show">
+              <svg
+                width="56px"
+                height="56px"
+                viewBox="0 0 72 72"
+                id="emoji"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g id="color" />
+                <g id="hair" />
+                <g id="skin" />
+                <g id="skin-shadow" />
+                <g id="line">
+                  <line
+                    x1="16"
+                    x2="56"
+                    y1="26"
+                    y2="26"
+                    fill="none"
+                    stroke="#000000"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-miterlimit="10"
+                    stroke-width="2"
+                  />
+                  <line
+                    x1="16"
+                    x2="56"
+                    y1="36"
+                    y2="36"
+                    fill="none"
+                    stroke="#000000"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-miterlimit="10"
+                    stroke-width="2"
+                  />
+                  <line
+                    x1="16"
+                    x2="56"
+                    y1="46"
+                    y2="46"
+                    fill="none"
+                    stroke="#000000"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-miterlimit="10"
+                    stroke-width="2"
+                  />
+                </g>
+              </svg>
+            </div>
+            <div class="mobile-menu-hide d-none">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="56"
+                height="56"
+                fill="currentColor"
+                class="bi bi-x"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"
+                />
+              </svg>
+            </div>
+          </div>
+          <div class="sc-eyawHE bBfChI">
+            <div class="sc-gRBQcy hUtPRo">
+              <div class="sc-IRuum iHVIDY">
+                <strong>7-day free trial</strong><span>Upgrade</span>
+              </div>
+            </div>
+            <div class="sc-MmmIl hyeGHC tutorial_register_9">
+              <div class="sc-TOsTZ ffGDjw">
+                <button
+                  data-cypress="nav_menu"
+                  class="sc-EHOje sc-IeHtk bbUUcO sc-fXyWPi cJGlfi"
+                >
+                  <span class="sc-kTRrGa kVOpQU">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="22"
+                      height="22"
+                      fill="currentColor"
+                      class="bi bi-three-dots-vertical"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"
+                      />
+                    </svg>
+                  </span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <ul class="sidenav-right mobile">
+        <div class="profile-info">
+          <div class="icons">
+            <img src="assets/img/avatar6.png" alt="avatar" class="img-fluid" />
+            <div class="action">
+              <a href="#"
+                ><svg
+                  aria-hidden="true"
+                  focusable="false"
+                  data-prefix="fal"
+                  data-icon="sync"
+                  class="svg-inline--fa fa-sync fa-w-16"
+                  role="img"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 512 512"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M492 8h-10c-6.627 0-12 5.373-12 12v110.627C426.929 57.261 347.224 8 256 8 123.228 8 14.824 112.338 8.31 243.493 7.971 250.311 13.475 256 20.301 256h10.016c6.353 0 11.646-4.949 11.977-11.293C48.157 132.216 141.097 42 256 42c82.862 0 154.737 47.077 190.289 116H332c-6.627 0-12 5.373-12 12v10c0 6.627 5.373 12 12 12h160c6.627 0 12-5.373 12-12V20c0-6.627-5.373-12-12-12zm-.301 248h-10.015c-6.352 0-11.647 4.949-11.977 11.293C463.841 380.158 370.546 470 256 470c-82.608 0-154.672-46.952-190.299-116H180c6.627 0 12-5.373 12-12v-10c0-6.627-5.373-12-12-12H20c-6.627 0-12 5.373-12 12v160c0 6.627 5.373 12 12 12h10c6.627 0 12-5.373 12-12V381.373C85.071 454.739 164.777 504 256 504c132.773 0 241.176-104.338 247.69-235.493.339-6.818-5.165-12.507-11.991-12.507z"
+                  ></path></svg
+              ></a>
+              <a href="#">
+                <svg
+                  aria-hidden="true"
+                  focusable="false"
+                  data-prefix="fal"
+                  data-icon="cog"
+                  class="svg-inline--fa fa-cog fa-w-16"
+                  role="img"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 512 512"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M482.696 299.276l-32.61-18.827a195.168 195.168 0 0 0 0-48.899l32.61-18.827c9.576-5.528 14.195-16.902 11.046-27.501-11.214-37.749-31.175-71.728-57.535-99.595-7.634-8.07-19.817-9.836-29.437-4.282l-32.562 18.798a194.125 194.125 0 0 0-42.339-24.48V38.049c0-11.13-7.652-20.804-18.484-23.367-37.644-8.909-77.118-8.91-114.77 0-10.831 2.563-18.484 12.236-18.484 23.367v37.614a194.101 194.101 0 0 0-42.339 24.48L105.23 81.345c-9.621-5.554-21.804-3.788-29.437 4.282-26.36 27.867-46.321 61.847-57.535 99.595-3.149 10.599 1.47 21.972 11.046 27.501l32.61 18.827a195.168 195.168 0 0 0 0 48.899l-32.61 18.827c-9.576 5.528-14.195 16.902-11.046 27.501 11.214 37.748 31.175 71.728 57.535 99.595 7.634 8.07 19.817 9.836 29.437 4.283l32.562-18.798a194.08 194.08 0 0 0 42.339 24.479v37.614c0 11.13 7.652 20.804 18.484 23.367 37.645 8.909 77.118 8.91 114.77 0 10.831-2.563 18.484-12.236 18.484-23.367v-37.614a194.138 194.138 0 0 0 42.339-24.479l32.562 18.798c9.62 5.554 21.803 3.788 29.437-4.283 26.36-27.867 46.321-61.847 57.535-99.595 3.149-10.599-1.47-21.972-11.046-27.501zm-65.479 100.461l-46.309-26.74c-26.988 23.071-36.559 28.876-71.039 41.059v53.479a217.145 217.145 0 0 1-87.738 0v-53.479c-33.621-11.879-43.355-17.395-71.039-41.059l-46.309 26.74c-19.71-22.09-34.689-47.989-43.929-75.958l46.329-26.74c-6.535-35.417-6.538-46.644 0-82.079l-46.329-26.74c9.24-27.969 24.22-53.869 43.929-75.969l46.309 26.76c27.377-23.434 37.063-29.065 71.039-41.069V44.464a216.79 216.79 0 0 1 87.738 0v53.479c33.978 12.005 43.665 17.637 71.039 41.069l46.309-26.76c19.709 22.099 34.689 47.999 43.929 75.969l-46.329 26.74c6.536 35.426 6.538 46.644 0 82.079l46.329 26.74c-9.24 27.968-24.219 53.868-43.929 75.957zM256 160c-52.935 0-96 43.065-96 96s43.065 96 96 96 96-43.065 96-96-43.065-96-96-96zm0 160c-35.29 0-64-28.71-64-64s28.71-64 64-64 64 28.71 64 64-28.71 64-64 64z"
+                  ></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div class="dropdown info">
+            <div
+              class="dropdown-toggle"
+              type="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <h2>Suhail Habib</h2>
+              <span>@Suhailhabib7 </span>
+            </div>
+            <ul class="dropdown-menu">
+              <li>
+                <a class="dropdown-item" href="#">
+                  <span>
+                    <svg
+                      aria-hidden="true"
+                      focusable="false"
+                      data-prefix="fal"
+                      data-icon="plus"
+                      class="svg-inline--fa fa-plus fa-w-12"
+                      role="img"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 384 512"
+                    >
+                      <path
+                        fill="currentColor"
+                        d="M376 232H216V72c0-4.42-3.58-8-8-8h-32c-4.42 0-8 3.58-8 8v160H8c-4.42 0-8 3.58-8 8v32c0 4.42 3.58 8 8 8h160v160c0 4.42 3.58 8 8 8h32c4.42 0 8-3.58 8-8V280h160c4.42 0 8-3.58 8-8v-32c0-4.42-3.58-8-8-8z"
+                      ></path>
+                    </svg>
+                  </span>
+                  Add a Twitter account
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#">
+                  <span>
+                    <svg
+                      aria-hidden="true"
+                      focusable="false"
+                      data-prefix="fal"
+                      data-icon="cog"
+                      class="svg-inline--fa fa-cog fa-w-16"
+                      role="img"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 512 512"
+                    >
+                      <path
+                        fill="currentColor"
+                        d="M482.696 299.276l-32.61-18.827a195.168 195.168 0 0 0 0-48.899l32.61-18.827c9.576-5.528 14.195-16.902 11.046-27.501-11.214-37.749-31.175-71.728-57.535-99.595-7.634-8.07-19.817-9.836-29.437-4.282l-32.562 18.798a194.125 194.125 0 0 0-42.339-24.48V38.049c0-11.13-7.652-20.804-18.484-23.367-37.644-8.909-77.118-8.91-114.77 0-10.831 2.563-18.484 12.236-18.484 23.367v37.614a194.101 194.101 0 0 0-42.339 24.48L105.23 81.345c-9.621-5.554-21.804-3.788-29.437 4.282-26.36 27.867-46.321 61.847-57.535 99.595-3.149 10.599 1.47 21.972 11.046 27.501l32.61 18.827a195.168 195.168 0 0 0 0 48.899l-32.61 18.827c-9.576 5.528-14.195 16.902-11.046 27.501 11.214 37.748 31.175 71.728 57.535 99.595 7.634 8.07 19.817 9.836 29.437 4.283l32.562-18.798a194.08 194.08 0 0 0 42.339 24.479v37.614c0 11.13 7.652 20.804 18.484 23.367 37.645 8.909 77.118 8.91 114.77 0 10.831-2.563 18.484-12.236 18.484-23.367v-37.614a194.138 194.138 0 0 0 42.339-24.479l32.562 18.798c9.62 5.554 21.803 3.788 29.437-4.283 26.36-27.867 46.321-61.847 57.535-99.595 3.149-10.599-1.47-21.972-11.046-27.501zm-65.479 100.461l-46.309-26.74c-26.988 23.071-36.559 28.876-71.039 41.059v53.479a217.145 217.145 0 0 1-87.738 0v-53.479c-33.621-11.879-43.355-17.395-71.039-41.059l-46.309 26.74c-19.71-22.09-34.689-47.989-43.929-75.958l46.329-26.74c-6.535-35.417-6.538-46.644 0-82.079l-46.329-26.74c9.24-27.969 24.22-53.869 43.929-75.969l46.309 26.76c27.377-23.434 37.063-29.065 71.039-41.069V44.464a216.79 216.79 0 0 1 87.738 0v53.479c33.978 12.005 43.665 17.637 71.039 41.069l46.309-26.76c19.709 22.099 34.689 47.999 43.929 75.969l-46.329 26.74c6.536 35.426 6.538 46.644 0 82.079l46.329 26.74c-9.24 27.968-24.219 53.868-43.929 75.957zM256 160c-52.935 0-96 43.065-96 96s43.065 96 96 96 96-43.065 96-96-43.065-96-96-96zm0 160c-35.29 0-64-28.71-64-64s28.71-64 64-64 64 28.71 64 64-28.71 64-64 64z"
+                      ></path>
+                    </svg>
+                  </span>
+                  Twitter Accounts
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="accordion" id="accordionExample">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+              <button
+                class="accordion-button"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapseOne"
+                aria-expanded="true"
+                aria-controls="collapseOne"
+              >
+                <div class="icon">
+                  <span>
+                    <svg
+                      aria-hidden="true"
+                      focusable="false"
+                      data-prefix="fal"
+                      data-icon="chart-bar"
+                      class="svg-inline--fa fa-chart-bar fa-w-16"
+                      role="img"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 512 512"
+                    >
+                      <path
+                        fill="currentColor"
+                        d="M424 352h16c4.4 0 8-3.6 8-8V104c0-4.4-3.6-8-8-8h-16c-4.4 0-8 3.6-8 8v240c0 4.4 3.6 8 8 8zm-96 0h16c4.4 0 8-3.6 8-8V200c0-4.4-3.6-8-8-8h-16c-4.4 0-8 3.6-8 8v144c0 4.4 3.6 8 8 8zm-192 0h16c4.4 0 8-3.6 8-8v-80c0-4.4-3.6-8-8-8h-16c-4.4 0-8 3.6-8 8v80c0 4.4 3.6 8 8 8zm96 0h16c4.4 0 8-3.6 8-8V136c0-4.4-3.6-8-8-8h-16c-4.4 0-8 3.6-8 8v208c0 4.4 3.6 8 8 8zm272 64H32V72c0-4.42-3.58-8-8-8H8c-4.42 0-8 3.58-8 8v360c0 8.84 7.16 16 16 16h488c4.42 0 8-3.58 8-8v-16c0-4.42-3.58-8-8-8z"
+                      ></path>
+                    </svg>
+                  </span>
+                  Analytics
+                </div>
+              </button>
+            </h2>
+            <div
+              id="collapseOne"
+              class="accordion-collapse collapse show"
+              aria-labelledby="headingOne"
+              data-bs-parent="#accordionExample"
+            >
+              <div class="accordion-body">
+                <div class="link">
+                  <a href="#">Dashboard</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ul>
+    </section>
+
+    <section class="dashboard">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12 col-md-4 mb-4">
+            <div class="welcome">
+              <h2>
+                Welcome to SocialDog
+                <span class="badge rounded-pill text-bg-primary">3</span>
+              </h2>
+              <div class="c-box-body">
+                <ul>
+                  <li>
+                    <a href="">
+                      <span
+                        ><svg
+                          aria-hidden="true"
+                          focusable="false"
+                          data-prefix="fas"
+                          data-icon="check-circle"
+                          class="svg-inline--fa fa-check-circle fa-w-16"
+                          role="img"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 512 512"
+                        >
+                          <path
+                            fill="currentColor"
+                            d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                          ></path></svg></span
+                      ><span class="action_title"
+                        >Let's register a keyword to monitor! </span
+                      ><svg
+                        aria-hidden="true"
+                        focusable="false"
+                        data-prefix="fal"
+                        data-icon="angle-right"
+                        class="svg-inline--fa fa-angle-right fa-w-6"
+                        role="img"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 192 512"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M166.9 264.5l-117.8 116c-4.7 4.7-12.3 4.7-17 0l-7.1-7.1c-4.7-4.7-4.7-12.3 0-17L127.3 256 25.1 155.6c-4.7-4.7-4.7-12.3 0-17l7.1-7.1c4.7-4.7 12.3-4.7 17 0l117.8 116c4.6 4.7 4.6 12.3-.1 17z"
+                        ></path>
+                      </svg>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="">
+                      <span>
+                        <svg
+                          aria-hidden="true"
+                          focusable="false"
+                          data-prefix="fas"
+                          data-icon="check-circle"
+                          class="svg-inline--fa fa-check-circle fa-w-16"
+                          role="img"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 512 512"
+                        >
+                          <path
+                            fill="currentColor"
+                            d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                          ></path>
+                        </svg>
+                      </span>
+                      <span class="action_title"
+                        >Let's Tweet at various times with scheduled Tweets!
+                      </span>
+                      <svg
+                        aria-hidden="true"
+                        focusable="false"
+                        data-prefix="fal"
+                        data-icon="angle-right"
+                        class="svg-inline--fa fa-angle-right fa-w-6"
+                        role="img"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 192 512"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M166.9 264.5l-117.8 116c-4.7 4.7-12.3 4.7-17 0l-7.1-7.1c-4.7-4.7-4.7-12.3 0-17L127.3 256 25.1 155.6c-4.7-4.7-4.7-12.3 0-17l7.1-7.1c4.7-4.7 12.3-4.7 17 0l117.8 116c4.6 4.7 4.6 12.3-.1 17z"
+                        ></path>
+                      </svg>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="">
+                      <span>
+                        <svg
+                          aria-hidden="true"
+                          focusable="false"
+                          data-prefix="fas"
+                          data-icon="check-circle"
+                          class="svg-inline--fa fa-check-circle fa-w-16"
+                          role="img"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 512 512"
+                        >
+                          <path
+                            fill="currentColor"
+                            d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                          ></path>
+                        </svg>
+                      </span>
+                      <span class="action_title">
+                        Let's unfollow inactive users!
+                      </span>
+                      <svg
+                        aria-hidden="true"
+                        focusable="false"
+                        data-prefix="fal"
+                        data-icon="angle-right"
+                        class="svg-inline--fa fa-angle-right fa-w-6"
+                        role="img"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 192 512"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M166.9 264.5l-117.8 116c-4.7 4.7-12.3 4.7-17 0l-7.1-7.1c-4.7-4.7-4.7-12.3 0-17L127.3 256 25.1 155.6c-4.7-4.7-4.7-12.3 0-17l7.1-7.1c4.7-4.7 12.3-4.7 17 0l117.8 116c4.6 4.7 4.6 12.3-.1 17z"
+                        ></path>
+                      </svg>
+                    </a>
+                  </li>
+                </ul>
+                <a class="c-box-body__action-bar" href="#">
+                  <span>View more</span>
+                  <svg
+                    aria-hidden="true"
+                    focusable="false"
+                    data-prefix="fal"
+                    data-icon="angle-right"
+                    class="svg-inline--fa fa-angle-right fa-w-6"
+                    role="img"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 192 512"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M166.9 264.5l-117.8 116c-4.7 4.7-12.3 4.7-17 0l-7.1-7.1c-4.7-4.7-4.7-12.3 0-17L127.3 256 25.1 155.6c-4.7-4.7-4.7-12.3 0-17l7.1-7.1c4.7-4.7 12.3-4.7 17 0l117.8 116c4.6 4.7 4.6 12.3-.1 17z"
+                    ></path></svg
+                ></a>
+              </div>
+            </div>
+            <div class="c-box">
+              <div class="c-box-header">
+                <h3 class="c-box-header__title">
+                  Recommended actions
+                  <span>175</span>
+                </h3>
+              </div>
+              <div class="c-box-body">
+                <ul class="dashboard_actions">
+                  <li class="new-action-list">
+                    <a class="url_service_user_id" href="#">
+                      <div class="dashboard_action_title">
+                        <div>
+                          <span>Let's follow users following you! (20)</span>
+                        </div>
+                        <div class="action-list-last-updated-at">
+                          <time datetime="1658637639000">6 hours ago</time>
+                        </div>
+                        &nbsp;
+                      </div>
+                      <svg
+                        aria-hidden="true"
+                        focusable="false"
+                        data-prefix="fal"
+                        data-icon="angle-right"
+                        class="svg-inline--fa fa-angle-right fa-w-6"
+                        role="img"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 192 512"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M166.9 264.5l-117.8 116c-4.7 4.7-12.3 4.7-17 0l-7.1-7.1c-4.7-4.7-4.7-12.3 0-17L127.3 256 25.1 155.6c-4.7-4.7-4.7-12.3 0-17l7.1-7.1c4.7-4.7 12.3-4.7 17 0l117.8 116c4.6 4.7 4.6 12.3-.1 17z"
+                        ></path></svg
+                    ></a>
+                  </li>
+                  <li class="new-action-list">
+                    <a class="url_service_user_id" href="#">
+                      <div class="dashboard_action_title">
+                        <div>
+                          <span>
+                            Let's unfollow users not following you! (129)
+                          </span>
+                        </div>
+                        <div class="action-list-last-updated-at">
+                          <time datetime="1658637639000">6 hours ago</time>
+                        </div>
+                        &nbsp;
+                      </div>
+                      <svg
+                        aria-hidden="true"
+                        focusable="false"
+                        data-prefix="fal"
+                        data-icon="angle-right"
+                        class="svg-inline--fa fa-angle-right fa-w-6"
+                        role="img"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 192 512"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M166.9 264.5l-117.8 116c-4.7 4.7-12.3 4.7-17 0l-7.1-7.1c-4.7-4.7-4.7-12.3 0-17L127.3 256 25.1 155.6c-4.7-4.7-4.7-12.3 0-17l7.1-7.1c4.7-4.7 12.3-4.7 17 0l117.8 116c4.6 4.7 4.6 12.3-.1 17z"
+                        ></path></svg
+                    ></a>
+                  </li>
+                  <li class="new-action-list">
+                    <a class="url_service_user_id" href="#">
+                      <div class="dashboard_action_title">
+                        <div>
+                          <span>Let's unfollow inactive users! (26)</span>
+                        </div>
+                        <div class="action-list-last-updated-at">
+                          <time datetime="1658554596000">a day ago</time>
+                        </div>
+                        &nbsp;
+                      </div>
+                      <svg
+                        aria-hidden="true"
+                        focusable="false"
+                        data-prefix="fal"
+                        data-icon="angle-right"
+                        class="svg-inline--fa fa-angle-right fa-w-6"
+                        role="img"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 192 512"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M166.9 264.5l-117.8 116c-4.7 4.7-12.3 4.7-17 0l-7.1-7.1c-4.7-4.7-4.7-12.3 0-17L127.3 256 25.1 155.6c-4.7-4.7-4.7-12.3 0-17l7.1-7.1c4.7-4.7 12.3-4.7 17 0l117.8 116c4.6 4.7 4.6 12.3-.1 17z"
+                        ></path></svg
+                    ></a>
+                  </li>
+                  <li>
+                    <a class="url_service_user_id hover" href="#">
+                      <div class="dashboard_action_title">
+                        <div>
+                          <span>
+                            No scheduled Tweets are set. Let's <br />
+                            schedule some Tweets!
+                          </span>
+                        </div>
+                        <div class="action-list-last-updated-at">
+                          <time datetime="1658419400000">3 days ago</time>
+                        </div>
+                        &nbsp;
+                      </div>
+                      <svg
+                        aria-hidden="true"
+                        focusable="false"
+                        data-prefix="fal"
+                        data-icon="angle-right"
+                        class="svg-inline--fa fa-angle-right fa-w-6"
+                        role="img"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 192 512"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M166.9 264.5l-117.8 116c-4.7 4.7-12.3 4.7-17 0l-7.1-7.1c-4.7-4.7-4.7-12.3 0-17L127.3 256 25.1 155.6c-4.7-4.7-4.7-12.3 0-17l7.1-7.1c4.7-4.7 12.3-4.7 17 0l117.8 116c4.6 4.7 4.6 12.3-.1 17z"
+                        ></path></svg
+                    ></a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="c-box">
+              <div class="c-box-header">
+                <h3 class="c-box-header__title">
+                  <a href="#"> Recent follows/unfollows </a>
+                </h3>
+              </div>
+              <div class="c-box-body">
+                <ul class="followed_and_unfollowed">
+                  <li>
+                    <a class="url_user_screen_name" href="#"
+                      ><div>
+                        <div class="friendship_update_message" color="success">
+                          Followed you
+                        </div>
+                        <span class="followed_and_unfollowed_last_update">
+                          <time datetime="1658637639000">6 hours ago</time>
+                        </span>
+                      </div>
+                      <div class="dashboard_followed_and_unfollowed_title">
+                        <div class="dashboard_followed_and_unfollowed_icon">
+                          <img
+                            src="https://pbs.twimg.com/profile_images/1531815141053972481/xQRu659R_bigger.jpg"
+                            alt=""
+                            class="sc-kcDeIU icpKyG"
+                          />
+                        </div>
+                        <div
+                          class="dashboard_followed_and_unfollowed_name_wrapper"
+                        >
+                          <div class="dashboard_followed_and_unfollowed_name">
+                            Santos Arpino
+                          </div>
+                          <div
+                            class="dashboard_followed_and_unfollowed_screen_name"
+                          >
+                            @ArpinoSantos
+                          </div>
+                        </div>
+                      </div></a
+                    >
+                  </li>
+                  <li>
+                    <a class="url_user_screen_name" href="#"
+                      ><div>
+                        <div class="friendship_update_message unfollow">
+                          Unfollowed you
+                        </div>
+                        <span class="followed_and_unfollowed_last_update">
+                          <time datetime="1658637639000">6 hours ago</time>
+                        </span>
+                      </div>
+                      <div class="dashboard_followed_and_unfollowed_title">
+                        <div class="dashboard_followed_and_unfollowed_icon">
+                          <img
+                            src="https://pbs.twimg.com/profile_images/1518572172662431744/mjwju8xq_bigger.jpg"
+                            alt=""
+                            class="sc-kcDeIU icpKyG"
+                          />
+                        </div>
+                        <div
+                          class="dashboard_followed_and_unfollowed_name_wrapper"
+                        >
+                          <div class="dashboard_followed_and_unfollowed_name">
+                            Rebecca Storey
+                          </div>
+                          <div
+                            class="dashboard_followed_and_unfollowed_screen_name"
+                          >
+                            @Rebecca96811892
+                          </div>
+                        </div>
+                      </div></a
+                    >
+                  </li>
+                  <li>
+                    <a class="url_user_screen_name" href="#"
+                      ><div>
+                        <div class="friendship_update_message unfollow">
+                          Unfollowed you
+                        </div>
+                        <span class="followed_and_unfollowed_last_update">
+                          <time datetime="1658637639000">6 hours ago</time>
+                        </span>
+                      </div>
+                      <div class="dashboard_followed_and_unfollowed_title">
+                        <div class="dashboard_followed_and_unfollowed_icon">
+                          <img
+                            src="https://pbs.twimg.com/profile_images/1397456765583650818/omhuU8cx_bigger.jpg"
+                            alt=""
+                            class="sc-kcDeIU icpKyG"
+                          />
+                        </div>
+                        <div
+                          class="dashboard_followed_and_unfollowed_name_wrapper"
+                        >
+                          <div class="dashboard_followed_and_unfollowed_name">
+                            ╰☆☆ 18+ OᑎᒪY ☆☆╮
+                          </div>
+                          <div
+                            class="dashboard_followed_and_unfollowed_screen_name"
+                          >
+                            @ladiesgugs
+                          </div>
+                        </div>
+                      </div></a
+                    >
+                  </li>
+                  <li>
+                    <a class="url_user_screen_name" href="#"
+                      ><div>
+                        <div
+                          class="sc-ebFjAB iTCbyR friendship_update_message"
+                          color="success"
+                        >
+                          Followed you
+                        </div>
+                        <span class="followed_and_unfollowed_last_update"
+                          ><time datetime="1658456984000"
+                            >2 days ago</time
+                          ></span
+                        >
+                      </div>
+                      <div class="dashboard_followed_and_unfollowed_title">
+                        <div class="dashboard_followed_and_unfollowed_icon">
+                          <img
+                            src="https://pbs.twimg.com/profile_images/1488449095610122240/H1qpHCY8_bigger.jpg"
+                            alt=""
+                            class="sc-kcDeIU icpKyG"
+                          />
+                        </div>
+                        <div
+                          class="dashboard_followed_and_unfollowed_name_wrapper"
+                        >
+                          <div class="dashboard_followed_and_unfollowed_name">
+                            Elena Lumbert
+                          </div>
+                          <div
+                            class="dashboard_followed_and_unfollowed_screen_name"
+                          >
+                            @ElenaLumbert
+                          </div>
+                        </div>
+                      </div>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <a class="c-box-body__action-bar" href="#">View more</a>
+            </div>
+
+            <div class="c-box no_padding mg_b30 p-dashboard-app">
+              <div class="c-box-header">
+                <h3 class="c-box-header__title">
+                  Mobile apps and Chrome extension
+                </h3>
+              </div>
+              <div class="mobile-apps">
+                <h4>Mobile apps</h4>
+                <div class="mobile-apps-inner">
+                  <a
+                    href="#"
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    class="app-store"
+                  >
+                    <img
+                      src="assets/img/ios_download_badge_en.svg"
+                      alt="ios_download_badge_en"
+                      width="120"
+                      height="40"
+                      class="sc-dDPtig knlSSh"
+                    />
+                  </a>
+                  <a
+                    href="#"
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    class="app-store"
+                  >
+                    <img
+                      src="assets/img/android_download_black_en.png"
+                      alt="android_download_black_en"
+                      width="134.5"
+                      height="40"
+                      class="sc-dDPtig knlSSh"
+                    />
+                  </a>
+                </div>
+                <h4>Chrome extension</h4>
+                <p>Schedule Tweets and Retweets with SocialDog from Twitter.</p>
+                <a href="#" class="extension"> Chrome extension </a>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-12 col-md-8 mb-4">
+            <div class="row">
+              <div class="counter">
+                <a href="#">
+                  <div class="counter-inner">
+                    <h3>Replies</h3>
+                    <div class="count">
+                      <span class="number">0</span>
+                    </div>
+                  </div>
+                </a>
+                <a href="#">
+                  <div class="counter-inner">
+                    <h3 class="sc-gTAwTn kuVerW">Retweets</h3>
+                    <div class="count">
+                      <span class="number">0</span>
+                    </div>
+                  </div>
+                </a>
+                <a href="#">
+                  <div class="counter-inner">
+                    <h3>Likes</h3>
+                    <div class="count">
+                      <span class="number">0</span>
+                    </div>
+                  </div>
+                </a>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="sc-bQNBTn eALnex">
+                    <div class="sc-YQBQK jnWrBa">
+                      <h3 class="sc-iHfyOJ kvVXWk">Recent popular Tweets</h3>
+                      <div class="sc-jUjSPW hdOGUb">
+                        <div class="sc-SFOxd fsYWYx">
+                          <span>Tweets last retrieved</span>&nbsp;:&nbsp;<time
+                            datetime="1658419157000"
+                          >
+                            3 days ago </time
+                          >&nbsp;
+                          <div
+                            class="tooltip sc-kcbnda eyzRqm"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="top"
+                            data-bs-custom-class="custom-tooltip"
+                            data-bs-title="This top tooltip is themed via CSS variables."
+                          ></div>
+                          <button
+                            color="default"
+                            type="button"
+                            class="sc-ifAKCX cASAF sc-kIWQTW cmgxRg"
+                            data-cypress=""
+                          >
+                            Retrieve
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="c-box-body popular-tweets">
+                      <div>
+                        <h4 class="title retweet">
+                          <a href="#"> Top 3 Retweeted </a>
+                        </h4>
+                        <div class="sc-hjLbrs chWNPT"></div>
+                      </div>
+                      <div>
+                        <h4 class="title favorite">
+                          <a href="#"> Top 3 liked </a>
+                        </h4>
+                        <div class="sc-hjLbrs chWNPT"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- end of dashboard -->
+
+    <!-- end of sidenav -->
+    <!-- bootstrap js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- custom js -->
+    <script src="assets/js/index.js"></script>
+  </body>
+</html>

@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% if user.is_authenticated %}
+
+    <!-- Content Wrapper -->   
+    <section class="dashboard">
+      <header>
+        <h1>
+          ユーザー情報
+        </h1>
+        <div>
+            ユーザーID:{{ user.id }}
+        </div>
+      </header>
+      <div class='content-body'>
+        <div class="container-fluid">
+          <div class="row margin-auto">
+            <div class="col-xl-6 col-lg-6 margin-auto">
+              <div class="card shadow">
+                <div class="card-body">
+                  <h4 class="text-center text-bold">ユーザー情報変更</h4>         
+                  <div class="form-row">
+                      <div class="col-md-6">
+                          <form id="div_id_last_name" class="form-group editable-input-panel">
+                              {% csrf_token %}                      
+                              <label class="col-form-label">姓</label>                      
+                              <input type="text" name="last_name" value="{{ request.user.last_name }}" class="textinput textInput form-control" required="" id="id_last_name">
+                          </form>
+                      </div>
+                      <div class="col-md-6">
+                          <form id="div_id_first_name" class="form-group editable-input-panel">
+                              {% csrf_token %}                      
+                              <label class="col-form-label">名</label>                      
+                              <input type="text" name="first_name" value="{{ request.user.first_name }}" class="textinput textInput form-control" required="" id="id_first_name">
+                          </form>
+                      </div>
+                  </div>
+                  
+                  <label class="col-form-label">メールアドレス</label>
+                  <div class="form-row">
+                      <div class="col-md-12">
+                          <form id="div_id_email" class="form-group mb-0 editable-input-panel">
+                              {% csrf_token %}                     
+                              <input type="email" name="email" value="{{ request.user.email }}" class="textinput textInput form-control" required="" id="id_email">                                      
+      
+                          </form>
+                      </div>
+                  </div>
+                  <br>
+                  <button class="btn btn-primary btn-center" id="change_user" name="user_form" value="change_user" style="width: 200px;">ユーザー情報変更</button>
+                  <br>
+                  <br>       
+                  <h4 class="text-bold text-uppercase text-center">パスワード</h4>
+                  <div class="form-row">
+                    <div class="col-md-12">
+                      <form method="post" class="form-group mb-0 editable-input-panel">
+                        {% csrf_token %}
+      
+                        {#{{ pw_form|crispy }}#}
+                        <div class="form-row">
+                          <div class="form-group col-md-12 mb-0">
+                            {{ pw_form.old_password|as_crispy_field }}
+                          </div>
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group col-md-12 mb-0">
+                            {{ pw_form.new_password1|as_crispy_field }}
+                          </div>
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group col-md-12 mb-0">
+                            {{ pw_form.new_password2|as_crispy_field }}
+                          </div>
+                        </div>
+                        
+                        <button class="btn btn-primary btn-center" name="pw_form" value="change_password" type="submit" style="width: 200px;">パスワード変更</button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>  
+    
+    <!-- Content Wrapper End -->
+
+{% endif %}
+{% endblock content %}
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/plug-ins/1.10.20/sorting/datetime-moment.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+<script>
+    $(document).ready(function() {
+    } );
+</script>
+{% endblock %}

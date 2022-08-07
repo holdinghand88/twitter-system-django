@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% block links %}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" crossorigin="anonymous">
+{% endblock %}
+{% block content %}
+{% load static %}
+{% if user.is_authenticated %}   
+<section class="dashboard">
+    <!-- Content Wrapper -->
+    <header>
+        <div class="page-title">
+            <h3>
+                活動履歴
+            </h3>
+            <div>
+                ユーザーID:{{ user.id }}
+            </div>
+        </div>
+    </header>
+    <div class="content-body">
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+            
+            <div class="row">
+                <div class="col-xl-12 col-lg-12">
+                    <div class="card shadow userlist">                        
+                        
+                        <table class="table table-hover table-scrollable">
+                            <thead class="card-header py-3">                                
+                                <th>No</th>                                
+                                <th>アクション名</th>
+                                <th>target-id</th>
+                                <th>時間</th>                                
+                            </thead>
+                            <tbody>                                
+                                {% for history in histories %}
+                                <tr>
+                                    <td>{{ forloop.counter}}</td>
+                                    <td>{{ history.action_param }}</td>
+                                    <td>{{ history.target_id }}</td>
+                                    <td>{{ history.pub_date }}</td>                                    
+                                </tr>
+                                {% endfor %}
+                            </tbody>                            
+                        </table>
+                    </div>
+                </div>
+            </div>           
+        </div>
+    </div>   
+    
+    <!-- Content Wrapper End -->
+</section>
+{% endif %}
+{% endblock content %}
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/plug-ins/1.10.20/sorting/datetime-moment.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+<script>
+    $(document).ready(function() {
+       
+        $.fn.dataTable.moment( 'ddd, DD MMM, YYYY' );
+        $('div.userlist table.table').dataTable(
+            {
+                "scrollX": true,
+                "scrollY": "700px",
+                "scrollCollapse": true,
+                "paging":         true,
+                bAutoWidth: false,                
+                "columnDefs": [
+                    { "width": "5%" },
+                    { "width": "25%" },
+                    { "width": "20%" },
+                    { "width": "20%" },                    
+                    
+                ],
+                "language":{
+                    "url": "//cdn.datatables.net/plug-ins/3cfcc339e89/i18n/Japanese.json"
+                }
+            }
+        );        
+        
+    } );
+</script>
+{% endblock %}

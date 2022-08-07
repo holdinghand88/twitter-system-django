@@ -1,0 +1,310 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+{% if user.is_authenticated %}
+
+    <!-- Content Wrapper -->   
+    <section class="dashboard">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-12 col-md-4 mb-4">
+              <div class="welcome">
+                <h2>
+                  Twitterの自動更新管理システム
+                  <span class="badge rounded-pill text-bg-primary">3</span>
+                </h2>
+                <div class="c-box-body">
+                  <ul>
+                    <li>
+                        <a href="{% url 'core:autolike' %}">
+                        <span><svg
+                            aria-hidden="true"
+                            focusable="false"
+                            data-prefix="fas"
+                            data-icon="check-circle"
+                            class="svg-inline--fa fa-check-circle fa-w-16"
+                            role="img"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 512 512">
+                            <path
+                              fill="currentColor"
+                              d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                            ></path></svg></span>
+                            <span class="action_title">自動でいいね</span>
+                            <svg
+                              aria-hidden="true"
+                              focusable="false"
+                              data-prefix="fal"
+                              data-icon="angle-right"
+                              class="svg-inline--fa fa-angle-right fa-w-6"
+                              role="img"
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 192 512">
+                              <path
+                                  fill="currentColor"
+                                  d="M166.9 264.5l-117.8 116c-4.7 4.7-12.3 4.7-17 0l-7.1-7.1c-4.7-4.7-4.7-12.3 0-17L127.3 256 25.1 155.6c-4.7-4.7-4.7-12.3 0-17l7.1-7.1c4.7-4.7 12.3-4.7 17 0l117.8 116c4.6 4.7 4.6 12.3-.1 17z"
+                              ></path>
+                            </svg>
+                        </a>
+                    </li>
+                    <li>
+                      <a href="{% url 'core:autoretweet' %}">
+                        <span>
+                          <svg
+                            aria-hidden="true"
+                            focusable="false"
+                            data-prefix="fas"
+                            data-icon="check-circle"
+                            class="svg-inline--fa fa-check-circle fa-w-16"
+                            role="img"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 512 512">
+                            <path
+                              fill="currentColor"
+                              d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                            ></path>
+                          </svg>
+                        </span>
+                        <span class="action_title"
+                          >自動リツイート
+                        </span>
+                        <svg
+                          aria-hidden="true"
+                          focusable="false"
+                          data-prefix="fal"
+                          data-icon="angle-right"
+                          class="svg-inline--fa fa-angle-right fa-w-6"
+                          role="img"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 192 512">
+                          <path
+                            fill="currentColor"
+                            d="M166.9 264.5l-117.8 116c-4.7 4.7-12.3 4.7-17 0l-7.1-7.1c-4.7-4.7-4.7-12.3 0-17L127.3 256 25.1 155.6c-4.7-4.7-4.7-12.3 0-17l7.1-7.1c4.7-4.7 12.3-4.7 17 0l117.8 116c4.6 4.7 4.6 12.3-.1 17z"
+                          ></path>
+                        </svg>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="{% url 'core:autofollow' %}">
+                        <span>
+                          <svg
+                            aria-hidden="true"
+                            focusable="false"
+                            data-prefix="fas"
+                            data-icon="check-circle"
+                            class="svg-inline--fa fa-check-circle fa-w-16"
+                            role="img"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 512 512">
+                            <path
+                              fill="currentColor"
+                              d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                            ></path>
+                          </svg>
+                        </span>
+                        <span class="action_title">
+                          自動フォロー
+                        </span>
+                        <svg
+                          aria-hidden="true"
+                          focusable="false"
+                          data-prefix="fal"
+                          data-icon="angle-right"
+                          class="svg-inline--fa fa-angle-right fa-w-6"
+                          role="img"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 192 512">
+                          <path
+                            fill="currentColor"
+                            d="M166.9 264.5l-117.8 116c-4.7 4.7-12.3 4.7-17 0l-7.1-7.1c-4.7-4.7-4.7-12.3 0-17L127.3 256 25.1 155.6c-4.7-4.7-4.7-12.3 0-17l7.1-7.1c4.7-4.7 12.3-4.7 17 0l117.8 116c4.6 4.7 4.6 12.3-.1 17z"
+                          ></path>
+                        </svg>
+                      </a>
+                    </li>
+                  </ul>
+                  <a class="c-box-body__action-bar" href="#">
+                    <span>詳細を見る</span>
+                    <svg
+                      aria-hidden="true"
+                      focusable="false"
+                      data-prefix="fal"
+                      data-icon="angle-right"
+                      class="svg-inline--fa fa-angle-right fa-w-6"
+                      role="img"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 192 512">
+                      <path
+                        fill="currentColor"
+                        d="M166.9 264.5l-117.8 116c-4.7 4.7-12.3 4.7-17 0l-7.1-7.1c-4.7-4.7-4.7-12.3 0-17L127.3 256 25.1 155.6c-4.7-4.7-4.7-12.3 0-17l7.1-7.1c4.7-4.7 12.3-4.7 17 0l117.8 116c4.6 4.7 4.6 12.3-.1 17z"
+                      ></path></svg></a>
+                </div>
+              </div>
+              <div class="c-box">
+                <div class="c-box-header">
+                  <h3 class="c-box-header__title">
+                    活動履歴
+                    <span>{{ logs|length }}</span>
+                  </h3>
+                </div>
+                <div class="c-box-body">
+                  <ul class="dashboard_actions">
+                    {% for log in logs|slice:":5" %}
+                    <li class="new-action-list">
+                      <a class="url_service_user_id">
+                        <div class="dashboard_action_title">
+                          <div>
+                            <span>
+                              {{log.action_param}}
+                            </span>
+                          </div>
+                          <div class="action-list-last-updated-at">
+                            <time datetime="1658637639000">{{log.pub_date}}</time>
+                          </div>
+                          &nbsp;
+                        </div>
+                        <svg
+                          aria-hidden="true"
+                          focusable="false"
+                          data-prefix="fal"
+                          data-icon="angle-right"
+                          class="svg-inline--fa fa-angle-right fa-w-6"
+                          role="img"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 192 512">
+                          <path
+                            fill="currentColor"
+                            d="M166.9 264.5l-117.8 116c-4.7 4.7-12.3 4.7-17 0l-7.1-7.1c-4.7-4.7-4.7-12.3 0-17L127.3 256 25.1 155.6c-4.7-4.7-4.7-12.3 0-17l7.1-7.1c4.7-4.7 12.3-4.7 17 0l117.8 116c4.6 4.7 4.6 12.3-.1 17z"
+                          ></path></svg></a>
+                    </li>
+                    {% endfor %}                   
+                  </ul>
+                </div>
+                <a class="c-box-body__action-bar" href="{% url 'core:historyall' %}">詳細を見る</a>
+              </div>
+              <div class="c-box">
+                <div class="c-box-header">
+                  <h3 class="c-box-header__title">
+                    <a href=""> 最近のフォロー/フォロー解除 </a>
+                  </h3>
+                </div>
+                <div class="c-box-body">
+                  <ul class="followed_and_unfollowed">
+                    {% for following in followings|slice:":3" %}
+                    <li>
+                      <a class="url_user_screen_name" href="#"
+                        ><div>
+                          <div class="friendship_update_message" color="success">
+                            Following
+                          </div>                          
+                        </div>
+                        <div class="dashboard_followed_and_unfollowed_title">
+                          <div class="dashboard_followed_and_unfollowed_icon">
+                            <img
+                              src="{{ following.profile_image_url }}"
+                              alt=""
+                              class="sc-kcDeIU icpKyG"/>
+                          </div>
+                          <div class="dashboard_followed_and_unfollowed_name_wrapper">
+                            <div class="dashboard_followed_and_unfollowed_name">{{following.name}}</div>
+                            <div class="dashboard_followed_and_unfollowed_screen_name">@{{following.username}}</div>
+                          </div>
+                        </div></a>
+                    </li>
+                    {% endfor %}                  
+                  </ul>
+                </div>
+                <a class="c-box-body__action-bar" href="#">詳細を見る</a>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-8 mb-4">
+              <div class="row">
+                <div class="counter">
+                  <a>
+                    <div class="counter-inner">
+                      <h3>いいね</h3>
+                      <div class="count">
+                        <span class="number">{{ liked_tweets }}</span>
+                      </div>
+                    </div>
+                  </a>
+                  <a>
+                    <div class="counter-inner">
+                      <h3 class="sc-gTAwTn kuVerW">フォロワー</h3>
+                      <div class="count">
+                        <span class="number">{{ followers_count }} {% if followers_count > 99 %}+{% endif %}</span>
+                      </div>
+                    </div>
+                  </a>
+                  <a>
+                    <div class="counter-inner">
+                      <h3>フォロー</h3>
+                      <div class="count">
+                        <span class="number">{{ following_count }} {% if following_count > 99 %}+{% endif %}</span>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+  
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="sc-bQNBTn eALnex">
+                      <div class="sc-YQBQK jnWrBa">
+                        <h3 class="sc-iHfyOJ kvVXWk">最近ツイート</h3>
+                        <div class="sc-jUjSPW hdOGUb">
+                          <div class="sc-SFOxd fsYWYx">                            
+                            <div
+                              class="tooltip sc-kcbnda eyzRqm"
+                              data-bs-toggle="tooltip"
+                              data-bs-placement="top"
+                              data-bs-custom-class="custom-tooltip"
+                              data-bs-title="This top tooltip is themed via CSS variables."
+                            ></div>
+                            <a href="/" color="default"  class="sc-ifAKCX cASAF sc-kIWQTW cmgxRg">
+                            取得
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="c-box-body popular-tweets">
+                        <div>
+                          <h4 class="title retweet">
+                            <a href="#"> トップツイート5</a>
+                          </h4>
+                          <div class="card shadow">
+                           <table class="table table-hover table-scrollable">
+                              <tbody>
+                                {% for tweet in tweets %}
+                                <tr>
+                                  <td>{{ forloop.counter}}</td>
+                                  <td><a target="_blank" href="https://twitter.com/{{ user.twitteruser.screen_name }}">{{ tweet.text }}</a></td>                                  
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                           </table>
+                          </div>
+                        </div>                        
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </section>  
+    
+    <!-- Content Wrapper End -->
+
+{% endif %}
+{% endblock content %}
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/plug-ins/1.10.20/sorting/datetime-moment.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+<script>
+    $(document).ready(function() {
+    } );
+</script>
+{% endblock %}

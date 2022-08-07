@@ -1,0 +1,380 @@
+{% extends 'base.html' %}
+{% block links %}
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+{% endblock %}
+{% block content %}
+{% load static %}
+{% if user.is_authenticated %}
+
+    <!-- Content Wrapper -->   
+    <section class="dashboard">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-12 col-md-4 mb-4">
+              <div class="welcome">
+                <h2>
+                  自動リツイート設定
+                  <span class="badge rounded-pill text-bg-primary">3</span>
+                </h2>
+                
+                <div class="c-box-body">
+                  <ul>                    
+                    <li>
+                      <a>
+                        <span>
+                          <svg
+                            aria-hidden="true"
+                            focusable="false"
+                            data-prefix="fas"
+                            data-icon="check-circle"
+                            class="svg-inline--fa fa-check-circle fa-w-16"
+                            role="img"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 512 512">
+                            <path
+                              fill="currentColor"
+                              d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                            ></path>
+                          </svg>
+                        </span>
+                        <span class="action_title">完了時間 : </span><span>{{likesettings.end_time}}</span>                      
+                      </a>
+                    </li>
+                    <li>
+                      <a>
+                        <span>
+                          <svg
+                            aria-hidden="true"
+                            focusable="false"
+                            data-prefix="fas"
+                            data-icon="check-circle"
+                            class="svg-inline--fa fa-check-circle fa-w-16"
+                            role="img"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 512 512">
+                            <path
+                              fill="currentColor"
+                              d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                            ></path>
+                          </svg>
+                        </span>
+                        <span class="action_title">実行状態 : </span>
+                        <span>
+                          {% if likesettings.status %}
+                          動作中
+                          {% else %}
+                          中止
+                          {% endif %}
+                        </span>   
+                      </a>
+                    </li>
+                    <li>
+                      <a>
+                      <span><svg
+                          aria-hidden="true"
+                          focusable="false"
+                          data-prefix="fas"
+                          data-icon="check-circle"
+                          class="svg-inline--fa fa-check-circle fa-w-16"
+                          role="img"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 512 512">
+                          <path
+                            fill="currentColor"
+                            d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                          ></path></svg></span>
+                          <span class="action_title">一日に : </span><span>{{likesettings.frequency}}回</span>
+                      </a>
+                  </li>
+                  </ul>
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#settingModalCenter">
+                    自動リツイート設定
+                  </button>
+                  <div class="modal fade" id="settingModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLongTitle">自動リツイート設定</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <div class="form-group schedule-form">                            
+                            <div class="form-group">
+                                <label>完了時間<span>（必須）</span></label>       
+                                <input type="text" class="date-picker ml-3" id="end_dt" name="datepicker" placeholder="2022/03/25" required>
+                            </div>
+                            <div class="form-group">
+                              <label>完了時間<span>（必須）</span></label>
+                              <select class="ml-3" id="end_time">
+                                  <option selected>00:00:00</option>
+                                  <option >01:00:00</option>
+                                  <option >02:00:00</option>
+                                  <option >03:00:00</option>
+                                  <option >04:00:00</option>
+                                  <option >05:00:00</option>
+                                  <option >06:00:00</option>
+                                  <option >07:00:00</option>
+                                  <option >08:00:00</option>
+                                  <option >09:00:00</option>
+                                  <option >10:00:00</option>
+                                  <option >11:00:00</option>
+                                  <option >12:00:00</option>
+                                  <option >13:00:00</option>
+                                  <option >14:00:00</option>
+                                  <option >15:00:00</option>
+                                  <option >16:00:00</option>
+                                  <option >17:00:00</option>
+                                  <option >18:00:00</option>
+                                  <option >19:00:00</option>
+                                  <option >20:00:00</option>
+                                  <option >21:00:00</option>
+                                  <option >22:00:00</option>
+                                  <option >23:00:00</option>                                        
+                              </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="checkbox">一日に
+                                <input type="number" class="ml-3" id="fnumber" value='10'>（回／日）
+                                </label>
+                            </div>
+                            <button type="submit" id="set_submit" class="btn btn-primary">設定する</button>
+                          </div>    
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="c-box">
+                <div class="c-box-header">
+                  <h3 class="c-box-header__title">
+                    活動履歴
+                    <span>{{ logs|length }}</span>
+                  </h3>
+                </div>
+                <div class="c-box-body">
+                  <ul class="dashboard_actions">
+                    {% for log in logs|slice:":5" %}
+                    <li class="new-action-list">
+                      <a class="url_service_user_id">
+                        <div class="dashboard_action_title">
+                          <div>
+                            <span>
+                              {{log.action_param}}
+                            </span>
+                          </div>
+                          <div class="action-list-last-updated-at">
+                            <time datetime="1658637639000">{{log.pub_date}}</time>
+                          </div>
+                          &nbsp;
+                        </div>
+                        <svg
+                          aria-hidden="true"
+                          focusable="false"
+                          data-prefix="fal"
+                          data-icon="angle-right"
+                          class="svg-inline--fa fa-angle-right fa-w-6"
+                          role="img"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 192 512">
+                          <path
+                            fill="currentColor"
+                            d="M166.9 264.5l-117.8 116c-4.7 4.7-12.3 4.7-17 0l-7.1-7.1c-4.7-4.7-4.7-12.3 0-17L127.3 256 25.1 155.6c-4.7-4.7-4.7-12.3 0-17l7.1-7.1c4.7-4.7 12.3-4.7 17 0l117.8 116c4.6 4.7 4.6 12.3-.1 17z"
+                          ></path></svg></a>
+                    </li>
+                    {% endfor %}                   
+                  </ul>
+                </div>
+                <a class="c-box-body__action-bar" href="{% url 'core:historyretweet' %}">詳細を見る</a>
+              </div>
+              
+            </div>
+            <div class="col-sm-12 col-md-8 mb-4">
+              <div class="row">
+                <div class="counter">
+                  <a>
+                    <div class="counter-inner">
+                      <h3>リツイート</h3>
+                      <div class="count">
+                        <span class="number">{{ retweet_count }}</span>
+                      </div>
+                    </div>
+                  </a>
+                  {% if likesettings.status %}
+                  <button type="button" id="stop_bot" class="btn btn-danger">
+                    自動リツイート中止
+                  </button>                  
+                  {% else %}
+                  <button type="button" id="start_bot" class="btn btn-primary">
+                    自動リツイート起動
+                  </button>
+                  {% endif %}
+                </div>
+  
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="sc-bQNBTn eALnex">
+                      <div class="sc-YQBQK jnWrBa">
+                        <h3 class="sc-iHfyOJ kvVXWk">最近いいねしたツイート</h3>
+                        <div class="sc-jUjSPW hdOGUb">
+                          <div class="sc-SFOxd fsYWYx">                            
+                            <div
+                              class="tooltip sc-kcbnda eyzRqm"
+                              data-bs-toggle="tooltip"
+                              data-bs-placement="top"
+                              data-bs-custom-class="custom-tooltip"
+                              data-bs-title="This top tooltip is themed via CSS variables."
+                            ></div>
+                            <a href="{% url 'core:autoretweet' %}" color="default"  class="sc-ifAKCX cASAF sc-kIWQTW cmgxRg">
+                            取得
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="c-box-body popular-tweets">
+                        <div>
+                          <h4 class="title retweet">
+                            <a href="#">トップツイート</a>
+                          </h4>
+                          <div class="card shadow">
+                           <table class="table table-hover table-scrollable">
+                              <tbody>
+                                {% for tweet in retweet_tweets|slice:":5" %}
+                                <tr>
+                                  <td>{{ forloop.counter}}</td>
+                                  <td><a target="_blank" href="https://twitter.com/{{ user.twitteruser.screen_name }}">{{ tweet.text }}</a></td>                                  
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                           </table>
+                          </div>
+                        </div>                        
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </section>  
+    
+    <!-- Content Wrapper End -->
+
+{% endif %}
+{% endblock content %}
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/plug-ins/1.10.20/sorting/datetime-moment.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script src="https://rawgit.com/jquery/jquery-ui/master/ui/i18n/datepicker-ja.js"></script>
+<script>
+    $(document).ready(function() {
+      // Date Picker
+      var now = Date.now();
+      $.get("https://holidays-jp.github.io/api/v1/date.json", function(holidaysData) {
+      $(".date-picker").datepicker({
+          dateFormat: "yy-mm-dd",
+          duration: "fast",
+          beforeShowDay: function(date) {
+          if (date.getDay() == 0) {
+              return [true, 'day-sunday', null];
+          } else if (date.getDay() == 6) {
+              return [true, 'day-saturday', null];
+          }
+
+          var holidays = Object.keys(holidaysData);
+          for (var i = 0; i < holidays.length; i++) {
+              var holiday = new Date(Date.parse(holidays[i]));
+              if (holiday.getYear() == date.getYear() &&
+                  holiday.getMonth() == date.getMonth() &&
+                  holiday.getDate() == date.getDate()) {
+              return [true, 'day-holiday', null];
+              }
+          }
+
+          return [true, 'day-weekday', null];
+          },
+          isDisabled: function(date) {
+          return date.valueOf() < now ? true : false;
+          }
+      });
+      });
+      // End of Date Picker
+
+      $('#start_bot').click(function(){
+        
+        $.ajax({
+          url : '{% url 'core:autolikestart' %}',
+          data:{
+              action_code: 2,
+              csrfmiddlewaretoken: "{{ csrf_token }}"
+          },
+          type:'POST',
+          success:function(data){
+            window.location = "{% url 'core:autoretweet' %}";
+          },error: function(jqXHR, textStatus, errorThrown) {
+            alert("ハッシュタグと自動いいね設定をよろしくお願いします。");
+          }
+        });
+      });
+      $('#stop_bot').click(function(){  
+        
+        $.ajax({
+          url : '{% url 'core:autolikestop' %}',
+          data:{
+              action_code: 2,
+              csrfmiddlewaretoken: "{{ csrf_token }}"
+          },
+          type:'POST',
+          success:function(data){
+            window.location = "{% url 'core:autoretweet' %}";
+          },error: function(jqXHR, textStatus, errorThrown) {
+            alert("自動いいね設定をよろしくお願いします。");
+          }
+        });
+      })
+      
+    });
+    $('#set_submit').click(function(){      
+      var end_date = $("#end_dt").val();
+      var end_time = $("#end_time").val();
+      var action_code = 2;
+      var frequency = 0;
+      frequency = $("#fnumber").val();
+      if (frequency > 50){
+        alert("最大頻度数は100です。");
+      }
+      if (end_date == '' || end_time == ''){
+        alert("正確な入力をお願いいたします。");
+      }
+      else{            
+          console.log(frequency);
+          $.ajax({
+              url : '{% url 'core:autolikesetting' %}',
+              dataType: "json",
+              traditional: true,
+              data:{
+                  action_code: action_code,
+                  end_date: end_date,
+                  frequency: frequency,
+                  end_time: end_time,                  
+                  csrfmiddlewaretoken: "{{ csrf_token }}"
+              },
+              type:'POST',
+              success:function(data){
+                  console.log(data);
+                  window.location = "{% url 'core:autoretweet' %}";
+                  
+              },error: function(jqXHR, textStatus, errorThrown) {
+                alert("時間設定を確認してください！");
+              }
+          });
+      }
+    });
+</script>
+{% endblock %}
