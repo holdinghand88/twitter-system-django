@@ -58,6 +58,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'core.middleware.FilterUserMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -150,6 +151,13 @@ STRIPE_PUBLISHABLE_KEY = os.environ.get('STRIPE_PUBLISHABLE_KEY')
 STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY')
 STRIPE_ENDPOINT_SECRET = os.environ.get('STRIPE_ENDPOINT_SECRET')
 
+SENDGRID_API_KEY='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'
+
+STRIPE_PUBLISHABLE_KEY = 'pk_test_51LNkD7KqobOw2dYyp9cXizHz7c8uAQT6s2tBEtb0StBw8YhNhuFpAk37gH47R5aTvUCXsYLwUzXkYrxDPmTDxaDq00uLpF2SkR'
+STRIPE_SECRET_KEY = 'pk_test_51LNkD7KqobOw2dYyp9cXizHz7c8uAQT6s2tBEtb0StBw8YhNhuFpAk37gH47R5aTvUCXsYLwUzXkYrxDPmTDxaDq00uLpF2SkR'
+STRIPE_ENDPOINT_SECRET = 'we_1JynfUB6aTGNAovpUp3RhvV0'
+STRIPE_PRICE_ID = 'price_1LUMbsKqobOw2dYyc4UtUQjG'
+
 # Celery Configuration Options
 CELERY_TIMEZONE = "Asia/Tokyo"
 CELERY_TASK_TRACK_STARTED = True
@@ -171,3 +179,6 @@ CACHES = {
         'LOCATION': 'my_cache_table',
     }
 }
+
+EMAIL_FROM = "aaaxaaaxaaax@icloud.com"
+EMAIL_USE_TLS = True

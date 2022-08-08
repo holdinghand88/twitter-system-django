@@ -24,4 +24,19 @@ urlpatterns = [
      path('history/retweet',HistoryRetweetView.as_view(), name="historyretweet"),
      path('history/follow',HistoryFollowView.as_view(), name="historyfollow"),
      
+     ##Following&Follower
+     path('follow/following',FollowView.as_view(), name="following"),
+     path('follow/follower',FollowerView.as_view(), name="follower"),
+     path('follow/follow/<int:pk>',follow, name="follow"),
+     path('follow/unfollow/<int:pk>',unfollow, name="unfollow"),
+     
+     # payment
+     path('payment',payment,name='payment'),
+     path('payment_history',payment_history,name='payment_history'),    
+     path('config/', stripe_config,name='config'),
+     path('create-checkout-session/',create_checkout_session),
+     path('payment/success/', SuccessView.as_view()),
+     path('payment/cancelled/', CancelledView.as_view()),
+     path('payment/webhook/', stripe_webhook),
+     
 ]

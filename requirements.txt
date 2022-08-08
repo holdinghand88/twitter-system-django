@@ -11,5 +11,6 @@ gunicorn==20.0.4
 psycopg2-binary==2.9.3
 tweepy==4.10.0
 twint==2.1.20
+sendgrid==6.9.7
 stripe==3.5.0
 uvicorn==0.17.5

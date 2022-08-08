@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block links %}
+{% endblock %}
+{% block content %}
+<section class="dashboard">
+    <div id="content" class="container-fluid">
+        <div class="row flex-1">
+             <div class="col-lg-4 col-md-12 justify-content-center auth-panel">
+                    <div class="card shadow">
+                        <div class="card-header">
+                            <h4>お支払い申請に成功しました。</h4>
+                        </div>
+                        <div class="card-body">
+                            <p class="text-success">お客様は{{ file_space }}Bytes購入に成功しました。<a href="/">こちらへ</a></p>
+                        </div>
+                    </div>
+
+             </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
+{% block scripts %}
+{% endblock %}

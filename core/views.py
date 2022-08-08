@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect, get_object_or_404,reverse
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, View, TemplateView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ObjectDoesNotExist
@@ -12,7 +13,7 @@ from django.http import HttpResponse,JsonResponse
 from requests import request
 from twitter_api.twitter_api import TwitterAPI
 from authorization.models import TwitterAuthToken, TwitterUser
-from .models import keywords,DraftTweets,AssetModel,NotificationSettings,LogoUserAction,AutoLikeSetting
+from .models import keywords,DraftTweets,AssetModel,NotificationSettings,LogoUserAction,AutoLikeSetting,PaymentHistory
 from .forms import AddKeywordForm,NotificationSettingForm,DraftForm,DraftFileForm,PostingTimeForm
 from .utils import autolike,autoretweet,autofollow
 import time
@@ -22,6 +23,8 @@ import pytz
 import json
 import os
 import threading
+import stripe
+from config.settings import STRIPE_PUBLISHABLE_KEY,STRIPE_SECRET_KEY,STRIPE_ENDPOINT_SECRET
 
 class HomeView(auth_views.LoginView):
     template_name = "home.html"    
@@ -46,20 +49,16 @@ class HomeView(auth_views.LoginView):
                 client = twitter_api.client_init(twitter_auth_token.oauth_token, twitter_auth_token.oauth_token_secret)
                 
                 info = twitter_api.get_me(client)
-                #print(info[0]['profile_image_url'])
-                end_time = datetime.datetime.now()
-                start_time = datetime.datetime.now() - datetime.timedelta(days=30)
-                followers_info = twitter_api.get_users_followers(twitter_user.twitter_id,client,100)
-                context['followers_count'] = followers_info[3]['result_count']
-                following_info = twitter_api.get_users_following(twitter_user.twitter_id,client,100)
-                context['following_count'] = following_info[3]['result_count']
-                context['logs'] = LogoUserAction.objects.filter(user=self.request.user).order_by('-pub_date')
-                liked_tweets = twitter_api.get_liked_tweets(twitter_user.twitter_id,client)
-                context['liked_tweets'] = liked_tweets[3]['result_count']
+                print(info[0]['public_metrics'])                             
+                context['followers_count'] = info[0]['public_metrics']['followers_count']            
+                context['following_count'] = info[0]['public_metrics']['following_count']
+                context['logs'] = LogoUserAction.objects.filter(user=self.request.user).order_by('-pub_date')                
+                context['liked_tweets'] = info[0]['public_metrics']['listed_count']    
                 max_result = 5
                 _tweets = twitter_api.get_users_tweets(twitter_user.twitter_id,client,max_result)                
                 context['tweets'] = _tweets[0]
-                context['tweets_count'] = _tweets[3]['result_count']
+                context['tweets_count'] = info[0]['public_metrics']['tweet_count']
+                following_info = twitter_api.get_users_following(twitter_user.twitter_id,client,10)
                 context['followings'] = following_info[0]
                 #print(context['followings'])
             
@@ -135,9 +134,9 @@ class AutoLikeView(auth_views.LoginView):
             twitter_user = get_object_or_404(TwitterUser,user=self.request.user)
             twitter_auth_token = get_object_or_404(TwitterAuthToken, id=twitter_user.twitter_oauth_token.id)
             client = twitter_api.client_init(twitter_auth_token.oauth_token, twitter_auth_token.oauth_token_secret)
-            
-            liked_tweets = twitter_api.get_liked_tweets(twitter_user.twitter_id,client)
-            context['liked_count'] = liked_tweets[3]['result_count']
+            info = twitter_api.get_me(client)
+            liked_tweets = twitter_api.get_liked_tweets(twitter_user.twitter_id,client)            
+            context['liked_count'] = info[0]['public_metrics']['listed_count'] 
             context['liked_tweets'] = liked_tweets[0]
         return context
 
@@ -360,8 +359,11 @@ class HistoryLikeView(auth_views.LoginView):
     model = LogoUserAction
     
     def get(self, request, *args, **kwargs):
-        context = self.get_context_data()
-        return render(request, self.template_name, context)
+        if self.request.user.is_authenticated: 
+            context = self.get_context_data()
+            return render(request, self.template_name, context)
+        else:
+            return redirect('authorization:login')
         
     def get_context_data(self, **kwargs):
         context = super(HistoryLikeView, self).get_context_data(**kwargs)
@@ -374,8 +376,11 @@ class HistoryRetweetView(auth_views.LoginView):
     model = LogoUserAction
     
     def get(self, request, *args, **kwargs):
-        context = self.get_context_data()
-        return render(request, self.template_name, context)
+        if self.request.user.is_authenticated: 
+            context = self.get_context_data()
+            return render(request, self.template_name, context)
+        else:
+            return redirect('authorization:login')
         
     def get_context_data(self, **kwargs):
         context = super(HistoryRetweetView, self).get_context_data(**kwargs)
@@ -388,8 +393,11 @@ class HistoryFollowView(auth_views.LoginView):
     model = LogoUserAction
     
     def get(self, request, *args, **kwargs):
-        context = self.get_context_data()
-        return render(request, self.template_name, context)
+        if self.request.user.is_authenticated: 
+            context = self.get_context_data()
+            return render(request, self.template_name, context)
+        else:
+            return redirect('authorization:login')
         
     def get_context_data(self, **kwargs):
         context = super(HistoryFollowView, self).get_context_data(**kwargs)
@@ -402,14 +410,18 @@ class HistoryAllView(auth_views.LoginView):
     model = LogoUserAction
     
     def get(self, request, *args, **kwargs):
-        context = self.get_context_data()
-        return render(request, self.template_name, context)
+        if self.request.user.is_authenticated: 
+            context = self.get_context_data()
+            return render(request, self.template_name, context)
+        else:
+            return redirect('authorization:login')
         
     def get_context_data(self, **kwargs):
         context = super(HistoryAllView, self).get_context_data(**kwargs)
         if self.request.user.is_authenticated:            
             context['histories'] = LogoUserAction.objects.filter(user=self.request.user).order_by('-pub_date')            
         return context
+    
     
 ############ ReTweet #########
 class AutoRetweetView(auth_views.LoginView):
@@ -440,13 +452,14 @@ class AutoRetweetView(auth_views.LoginView):
             twitter_user = get_object_or_404(TwitterUser,user=self.request.user)
             twitter_auth_token = get_object_or_404(TwitterAuthToken, id=twitter_user.twitter_oauth_token.id)
             client = twitter_api.client_init(twitter_auth_token.oauth_token, twitter_auth_token.oauth_token_secret)
-            max_result = 100
+            info = twitter_api.get_me(client)
+            
+            max_result = 10
             end_time = datetime.datetime.now()
-            start_time = datetime.datetime.now() - datetime.timedelta(days=30)
-            retweets = twitter_api.get_users_retweets(twitter_user.twitter_id,client,max_result,end_time,start_time)
+            start_time = datetime.datetime.now() - datetime.timedelta(days=30)            
             tweets = twitter_api.get_users_tweets(twitter_user.twitter_id,client,max_result,end_time,start_time)
             
-            context['retweet_count'] = tweets[3]['result_count'] - retweets[3]['result_count']
+            context['retweet_count'] = info[0]['public_metrics']['tweet_count']
             context['retweet_tweets'] = tweets[0]
         return context
     
@@ -480,11 +493,201 @@ class AutoFollowView(auth_views.LoginView):
             twitter_user = get_object_or_404(TwitterUser,user=self.request.user)
             twitter_auth_token = get_object_or_404(TwitterAuthToken, id=twitter_user.twitter_oauth_token.id)
             client = twitter_api.client_init(twitter_auth_token.oauth_token, twitter_auth_token.oauth_token_secret)
-            max_result = 100
-            end_time = datetime.datetime.now()
-            start_time = datetime.datetime.now() - datetime.timedelta(days=30)
-            following_info = twitter_api.get_users_following(twitter_user.twitter_id,client,1000)
-            context['following_count'] = following_info[3]['result_count']
+            info = twitter_api.get_me(client)
+            
+            following_info = twitter_api.get_users_following(twitter_user.twitter_id,client,100)
+            context['following_count'] = info[0]['public_metrics']['following_count']
             context['followings'] = following_info[0]
         return context
     
+################## Following and Follower ###################
+class FollowView(auth_views.LoginView):
+    model = keywords
+    template_name = "following.html"
+    
+    def get(self, request, *args, **kwargs):
+        if self.request.user.is_authenticated: 
+            context = self.get_context_data()   
+            return render(request, self.template_name, context)
+        else:
+            return redirect('authorization:login')
+    
+    def get_context_data(self, **kwargs):
+        twitter_api = TwitterAPI()
+        context = super(FollowView, self).get_context_data(**kwargs)
+        if self.request.user.is_authenticated:
+            
+            twitter_user = get_object_or_404(TwitterUser,user=self.request.user)
+            twitter_auth_token = get_object_or_404(TwitterAuthToken, id=twitter_user.twitter_oauth_token.id)
+            client = twitter_api.client_init(twitter_auth_token.oauth_token, twitter_auth_token.oauth_token_secret)
+            info = twitter_api.get_me(client)
+            following_info = twitter_api.get_users_following(twitter_user.twitter_id,client,1000)
+            context['following_count'] = info[0]['public_metrics']['following_count']
+            context['followings'] = following_info[0]
+        return context
+    
+class FollowerView(auth_views.LoginView):
+    model = keywords
+    template_name = "follower.html"
+    
+    def get(self, request, *args, **kwargs):
+        if self.request.user.is_authenticated: 
+            context = self.get_context_data()   
+            return render(request, self.template_name, context)
+        else:
+            return redirect('authorization:login')
+    
+    def get_context_data(self, **kwargs):
+        twitter_api = TwitterAPI()
+        context = super(FollowerView, self).get_context_data(**kwargs)
+        if self.request.user.is_authenticated:
+            
+            twitter_user = get_object_or_404(TwitterUser,user=self.request.user)
+            twitter_auth_token = get_object_or_404(TwitterAuthToken, id=twitter_user.twitter_oauth_token.id)
+            client = twitter_api.client_init(twitter_auth_token.oauth_token, twitter_auth_token.oauth_token_secret)
+            #api = twitter_api.api_init(twitter_auth_token.oauth_token, twitter_auth_token.oauth_token_secret)
+            info = twitter_api.get_me(client)
+                                    
+            context['followers_count'] = info[0]['public_metrics']['followers_count']            
+            
+            following_info = twitter_api.get_users_following_ids(twitter_user.twitter_id,client,1000)
+            #following_l = api.get_friend_ids(tuser_id=twitter_user.twitter_id,count=5000)
+            followers_info = twitter_api.get_users_followers(twitter_user.twitter_id,client,1000)                  
+            following_ids = []
+            for following in following_info[0]:
+                following_ids.append(following.id)
+            context['followings'] = following_ids
+            context['followers'] = followers_info[0]
+            #print(following_l)     
+        return context
+    
+def follow(request,pk):
+    twitter_api = TwitterAPI()
+    twitter_user = get_object_or_404(TwitterUser,user=request.user)
+    twitter_auth_token = get_object_or_404(TwitterAuthToken, id=twitter_user.twitter_oauth_token.id)
+    client = twitter_api.client_init(twitter_auth_token.oauth_token, twitter_auth_token.oauth_token_secret)
+    user_id = pk
+    client.follow_user(target_user_id=user_id,user_auth=True)
+    return redirect(reverse("core:follower"))
+
+def unfollow(request,pk):
+    twitter_api = TwitterAPI()
+    twitter_user = get_object_or_404(TwitterUser,user=request.user)
+    twitter_auth_token = get_object_or_404(TwitterAuthToken, id=twitter_user.twitter_oauth_token.id)
+    client = twitter_api.client_init(twitter_auth_token.oauth_token, twitter_auth_token.oauth_token_secret)
+    user_id = pk
+    print(user_id)
+    client.unfollow_user(target_user_id=user_id,user_auth=True)
+    return redirect(reverse("core:following"))
+
+
+##################=======  プラン ===========##########
+def payment(request):
+    return render(request, 'payment/payment.html', context={})
+
+@login_required
+def payment_history(request):
+    payment_history = PaymentHistory.objects.all()
+    return render(request, 'payment/payment_history.html', context={'payment_history':payment_history})
+
+@csrf_exempt
+def stripe_config(request):
+    if request.method == 'GET':
+        stripe_config = {'publicKey': STRIPE_PUBLISHABLE_KEY}
+        return JsonResponse(stripe_config, safe=False)
+
+@csrf_exempt
+def create_checkout_session(request):
+    if request.method == 'GET':
+        plan_id = request.GET.get('plan_id')
+        user = request.user
+        name = ''
+        if plan_id=='1':
+            name = 'Free'
+            price = 0
+            user = request.user            
+            #user.profile.save()
+            user.save()
+            payment = PaymentHistory()
+            payment.user = user
+            payment.storage = 0
+            payment.price = 0
+            payment.save()
+            return JsonResponse({'success':True})
+        if plan_id=='2':
+            name = '100￥'
+            price = 100
+        print(price)
+        # domain_url = 'http://localhost:8003/'
+        domain_url = request.scheme+'://'+request.META['HTTP_HOST']+'/'
+        stripe.api_key = STRIPE_SECRET_KEY
+        try:
+            checkout_session = stripe.checkout.Session.create(
+                success_url=domain_url + 'payment/success?session_id={CHECKOUT_SESSION_ID}&plan_id='+plan_id,
+                cancel_url=domain_url + 'payment',
+                payment_method_types=['card'],
+                customer_email=request.user.email,
+                mode='payment',
+                locale='ja',
+                line_items=[
+                    {
+                        'name': name,
+                        'quantity': 1,
+                        'currency': 'JPY',
+                        'amount': int(price),
+                    }
+                ],
+                metadata={'plan_id':plan_id},
+                client_reference_id = request.user.id
+            )
+            return JsonResponse({'sessionId': checkout_session['id']})
+        except Exception as e:
+            return JsonResponse({'error': str(e)})
+
+@csrf_exempt
+def stripe_webhook(request):
+    stripe.api_key = STRIPE_SECRET_KEY
+    endpoint_secret = STRIPE_ENDPOINT_SECRET
+    payload = request.body
+    sig_header = request.META['HTTP_STRIPE_SIGNATURE']
+    event = None
+
+    try:
+        event = stripe.Webhook.construct_event(
+            payload, sig_header, endpoint_secret
+        )
+    except ValueError as e:
+        return HttpResponse(status=400)
+    except stripe.error.SignatureVerificationError as e:
+        return HttpResponse(status=400)
+
+    if event['type'] == 'checkout.session.completed':
+
+        data = event['data']['object']
+        user_id = data['client_reference_id']
+        user = User.objects.get(id=user_id)
+        plan_id = int(data['metadata']['plan_id'])
+
+        if int(plan_id) == 2:            
+            payment = PaymentHistory()
+            payment.user = user
+            payment.storage = 5368706371
+            payment.price = 100
+            payment.save()
+
+
+    return HttpResponse(status=200)
+
+class SuccessView(TemplateView):
+    template_name = 'payment_success.html'
+
+    def get(self, request, *args, **kwargs):
+        plan_id = request.GET.get('plan_id')
+        if plan_id == '1':
+            file_space = 4000
+        elif plan_id == '2':
+            file_space = 5368706371
+        return render(request,self.template_name,{'file_space':file_space})
+
+class CancelledView(TemplateView):
+    template_name = 'payment/payment_cancelled.html'

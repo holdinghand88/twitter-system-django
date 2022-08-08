@@ -22,6 +22,7 @@ class TwitterUser(models.Model):
     profile_image_url = models.CharField(max_length=255, null=True)
     twitter_oauth_token = models.ForeignKey(TwitterAuthToken, on_delete=models.CASCADE)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    is_notified = models.BooleanField(_("Is notified?"), default=False)
 
     def __str__(self):
         return self.screen_name

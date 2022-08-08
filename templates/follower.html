@@ -10,10 +10,10 @@
     <header>
         <div class="page-title">
             <h3>
-                フォロー
+                フォロワー
             </h3>
             <div>
-                ユーザーID:{{ user.id }}
+                {{followers_count}}
             </div>
         </div>
     </header>
@@ -33,12 +33,56 @@
                                 <th></th>                                
                             </thead>                         
                             <tbody>                                
-                                {% for following in followings %}
+                                {% for follower in followers %}
                                 <tr>
-                                    <td><img src="{{ following.profile_image_url }}" class="sc-kcDeIU icpKyG"/></td>
-                                    <td><a target="_blank" href="https://twitter.com/{{ following.username }}">@{{following.username}}</a></td>
-                                    <td><a target="_blank" href="https://twitter.com/{{ following.username }}">{{ following.name}}</a></td>
-                                    <td><button class="btn btn-primary">フォローを外す</button></td>
+                                    <td><img src="{{ follower.profile_image_url }}" class="sc-kcDeIU icpKyG"/></td>
+                                    <td><a target="_blank" href="https://twitter.com/{{ follower.username }}">@{{follower.username}}</a></td>
+                                    <td><a target="_blank" href="https://twitter.com/{{ follower.username }}">{{ follower.name}}</a></td>
+                                    {% if follower.id in followings %}
+                                    <td><button data-toggle="modal" data-target="#deletemodal_{{ follower.id }}" class="btn btn-primary">フォローを外す</button>
+                                        <div class="modal fade" id="deletemodal_{{ follower.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4>【{{ follower.name }}】様</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                                </div>
+                                                <form action="{% url 'core:unfollow' pk=follower.id %}" method="POST" enctype="multipart/form-data">   
+                                                    {% csrf_token %}                                     
+                                                    <div class="modal-footer">
+                                                    <button type="button" class="btn btn-danger" data-dismiss="modal">キャンセル</button>
+                                                    <button type="submit" class="btn btn-primary">OK</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    {% else %}
+                                    <td><button data-toggle="modal" data-target="#deletemodal_{{ follower.id }}" class="btn btn-primary">フォローする</button>
+                                        <div class="modal fade" id="deletemodal_{{ follower.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4>【{{ follower.name }}】様</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                                </div>
+                                                <form action="{% url 'core:follow' pk=follower.id %}" method="POST" enctype="multipart/form-data">   
+                                                    {% csrf_token %}                                     
+                                                    <div class="modal-footer">
+                                                    <button type="button" class="btn btn-danger" data-dismiss="modal">キャンセル</button>
+                                                    <button type="submit" class="btn btn-primary">OK</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    {% endif %}
                                 </tr>
                                 {% endfor %}
                             </tbody>                            
