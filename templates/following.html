@@ -13,7 +13,7 @@
                 フォロー
             </h3>
             <div>
-                ユーザーID:{{ user.id }}
+                {{following_count}}
             </div>
         </div>
     </header>
@@ -38,7 +38,27 @@
                                     <td><img src="{{ following.profile_image_url }}" class="sc-kcDeIU icpKyG"/></td>
                                     <td><a target="_blank" href="https://twitter.com/{{ following.username }}">@{{following.username}}</a></td>
                                     <td><a target="_blank" href="https://twitter.com/{{ following.username }}">{{ following.name}}</a></td>
-                                    <td><button class="btn btn-primary">フォローを外す</button></td>
+                                    <td><button data-toggle="modal" data-target="#deletemodal_{{ following.id }}" id="follow" class="btn btn-primary">フォローを外す</button>
+                                        <div class="modal fade" id="deletemodal_{{ following.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4>【{{ following.name }}】様</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                                </div>
+                                                <form action="{% url 'core:unfollow' pk=following.id %}" method="POST" enctype="multipart/form-data">   
+                                                    {% csrf_token %}                                     
+                                                    <div class="modal-footer">
+                                                    <button type="button" class="btn btn-danger" data-dismiss="modal">キャンセル</button>
+                                                    <button type="submit" class="btn btn-primary">OK</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </td>                                    
                                 </tr>
                                 {% endfor %}
                             </tbody>                            
@@ -83,5 +103,6 @@
         );        
         
     } );
+    
 </script>
 {% endblock %}

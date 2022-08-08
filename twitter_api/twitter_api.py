@@ -56,7 +56,7 @@ class TwitterAPI:
     
     def get_me(self, client):
         try:
-            info = client.get_me(user_auth=True,expansions='pinned_tweet_id',user_fields=['profile_image_url'])
+            info = client.get_me(user_auth=True,expansions='pinned_tweet_id',user_fields=['public_metrics','profile_image_url'])
             return info
         except Exception as e:
             print(e)
@@ -73,6 +73,14 @@ class TwitterAPI:
     def get_users_following(self, id, client,max_results=None,pagination_token=None):
         try:
             following_info = client.get_users_following(user_auth=True,id=id, max_results=max_results, pagination_token=pagination_token,user_fields=['profile_image_url'])
+            return following_info
+        except Exception as e:
+            print(e)
+            return None
+        
+    def get_users_following_ids(self, id, client,max_results=None,pagination_token=None):
+        try:
+            following_info = client.get_users_following(user_auth=True,id=id, max_results=max_results, expansions='pinned_tweet_id',pagination_token=pagination_token,user_fields=['id'])
             return following_info
         except Exception as e:
             print(e)
