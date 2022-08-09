@@ -176,7 +176,7 @@ if ENVIRONMENT == 'production':
             'MEDIA_URL', default=f'https://{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/')
         HOST_NAME = 'https://twikatukko.com'
     SENDGRID_API_KEY  = os.environ['SENDGRID_API_KEY']  
-    STRIPE_PUBLIC_KEY = os.environ['STRIPE_LIVE_PUBLIC_KEY']
+    STRIPE_PUBLISHABLE_KEY = os.environ['STRIPE_LIVE_PUBLIC_KEY']
     STRIPE_SECRET_KEY = os.environ['STRIPE_LIVE_SECRET_KEY']
     STRIPE_PRICE_ID = os.environ['STRIPE_PRICE_ID']
     STRIPE_ENDPOINT_SECRET = os.environ['STRIPE_ENDPOINT_SECRET']
