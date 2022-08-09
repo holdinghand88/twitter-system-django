@@ -23,9 +23,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-6%a^o=(=6f6&^vi0r0o+#akd@ujq=4zqb^^wb#!^je46x@uz0q'
-
+ENVIRONMENT = os.environ.get('ENVIRONMENT', default='local')
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('DJANGO_SECRET_KEY')
+if ENVIRONMENT == 'production':
+    SECRET_KEY = os.environ.get('SECRET_KEY')
+else:
+    SECRET_KEY = config('SECRET_KEY')
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DJANGO_DEBUG', cast=bool)
@@ -87,35 +91,23 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-
-
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
-# AUTH_PASSWORD_VALIDATORS = [
-#     {
-#         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-#     },
-#     {
-#         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-#     },
-#     {
-#         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-#     },
-#     {
-#         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-#     },
-# ]
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
+]
 
 
 # Internationalization
@@ -135,10 +127,95 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
-MEDIA_URL = "/media/"
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+if ENVIRONMENT == 'local':
+    STATIC_URL = 'static/'
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+    MEDIA_URL = "/media/"
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+    
+# Database
+# https://docs.djangoproject.com/en/4.0/ref/settings/#databases
+
+if ENVIRONMENT == 'production':
+    PRODUCTION = True
+    DEBUG = False
+    ALLOWED_HOSTS = ['*']
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': os.environ.get('RDS_DB_NAME'),
+            'USER': os.environ.get('RDS_USERNAME'),
+            'PASSWORD': os.environ.get('RDS_PASSWORD'),
+            'HOST': os.environ.get('RDS_HOSTNAME'),
+            'PORT': os.environ.get('RDS_PORT', default=3306),
+            'OPTIONS': {
+                'charset': 'utf8mb4'  # This is the important line
+            }
+        }
+    }
+    
+    if "AWS_ACCESS_KEY_ID" in os.environ and "AWS_STORAGE_BUCKET_NAME" in os.environ:
+        AWS_ACCESS_KEY_ID = os.environ["AWS_ACCESS_KEY_ID"]
+        AWS_SECRET_ACCESS_KEY = os.environ["AWS_SECRET_ACCESS_KEY"]
+        AWS_STORAGE_BUCKET_NAME = os.environ["AWS_STORAGE_BUCKET_NAME"]
+        AWS_DEFAULT_ACL = None
+        AWS_QUERYSTRING_AUTH = False
+        AWS_S3_SIGNATURE_VERSION = 's3v4'
+        AWS_S3_REGION_NAME = "ap-northeast-1"
+        AWS_S3_ENCRYPTION = True
+        AWS_S3_HOST = ''
+        AWS_IS_GZIPPED = True
+        AWS_S3_OBJECT_PARAMETERS = {
+            'CacheControl': 'max-age=86400',
+        }
+        DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+        STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+        STATIC_URL = os.environ.get(
+            'STATIC_URL', default=f'https://{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/')
+        MEDIA_URL = os.environ.get(
+            'MEDIA_URL', default=f'https://{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/')
+        HOST_NAME = 'https://twikatukko.com'
+    SENDGRID_API_KEY  = os.environ['SENDGRID_API_KEY']  
+    STRIPE_PUBLIC_KEY = os.environ['STRIPE_LIVE_PUBLIC_KEY']
+    STRIPE_SECRET_KEY = os.environ['STRIPE_LIVE_SECRET_KEY']
+    STRIPE_PRICE_ID = os.environ['STRIPE_PRICE_ID']
+
+    EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']
+    EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
+    
+    bearer_token = os.environ['BEARER_TOKEN']
+    api_key = os.environ['TWITTER_API_KEY']
+    api_secret = os.environ['TWITTER_API_SECRET']
+    client_id = os.environ['TWITTER_CLIENT_ID']
+    client_secret = os.environ['TWITTER_CLIENT_SECRET']
+    oauth_callback_url = os.environ['TWITTER_OAUTH_CALLBACK_URL']
+
+else:
+    PRODUCTION = False
+    DEBUG = True
+    ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+    HOST_NAME = 'http://localhost:8000'
+    
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
+    
+    SENDGRID_API_KEY='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'
+
+    STRIPE_PUBLISHABLE_KEY = 'pk_test_51LNkD7KqobOw2dYyp9cXizHz7c8uAQT6s2tBEtb0StBw8YhNhuFpAk37gH47R5aTvUCXsYLwUzXkYrxDPmTDxaDq00uLpF2SkR'
+    STRIPE_SECRET_KEY = 'pk_test_51LNkD7KqobOw2dYyp9cXizHz7c8uAQT6s2tBEtb0StBw8YhNhuFpAk37gH47R5aTvUCXsYLwUzXkYrxDPmTDxaDq00uLpF2SkR'
+    STRIPE_ENDPOINT_SECRET = 'we_1JynfUB6aTGNAovpUp3RhvV0'
+    STRIPE_PRICE_ID = 'price_1LUMbsKqobOw2dYyc4UtUQjG'
+    
+    bearer_token = config('BEARER_TOKEN')
+    api_key = config('TWITTER_API_KEY')
+    api_secret = config('TWITTER_API_SECRET')
+    client_id = config('TWITTER_CLIENT_ID')
+    client_secret = config('TWITTER_CLIENT_SECRET')
+    oauth_callback_url = config('TWITTER_OAUTH_CALLBACK_URL')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -147,16 +224,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
 
-STRIPE_PUBLISHABLE_KEY = os.environ.get('STRIPE_PUBLISHABLE_KEY')
-STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY')
-STRIPE_ENDPOINT_SECRET = os.environ.get('STRIPE_ENDPOINT_SECRET')
-
-SENDGRID_API_KEY='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'
-
-STRIPE_PUBLISHABLE_KEY = 'pk_test_51LNkD7KqobOw2dYyp9cXizHz7c8uAQT6s2tBEtb0StBw8YhNhuFpAk37gH47R5aTvUCXsYLwUzXkYrxDPmTDxaDq00uLpF2SkR'
-STRIPE_SECRET_KEY = 'pk_test_51LNkD7KqobOw2dYyp9cXizHz7c8uAQT6s2tBEtb0StBw8YhNhuFpAk37gH47R5aTvUCXsYLwUzXkYrxDPmTDxaDq00uLpF2SkR'
-STRIPE_ENDPOINT_SECRET = 'we_1JynfUB6aTGNAovpUp3RhvV0'
-STRIPE_PRICE_ID = 'price_1LUMbsKqobOw2dYyc4UtUQjG'
 
 # Celery Configuration Options
 CELERY_TIMEZONE = "Asia/Tokyo"
