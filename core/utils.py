@@ -1,4 +1,3 @@
-from tkinter import E
 from django.shortcuts import render, redirect, get_object_or_404
 from authorization.models import TwitterAuthToken, TwitterUser
 from .models import keywords,NotificationSettings,LogoUserAction,AutoLikeSetting
