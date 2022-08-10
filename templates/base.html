@@ -172,6 +172,11 @@
                 <li class="list"><a class="link" href="{% url 'authorization:profile' %}">アカウント設定</a></li>                                      
                 <li ><hr class="dropdown-divider" /></li>
                 <li class="list">
+                  <a class="link" href="{% url 'authorization:termuse' %}">                        
+                    利用規約
+                  </a>
+                </li> 
+                <li class="list">
                   <a class="link" href="{% url 'authorization:logout' %}">ログアウト</a>
                 </li>                    
               </ul>
@@ -334,6 +339,11 @@
                         アカウント設定
                       </a>
                     </li>
+                    <li>
+                      <a class="dropdown-item" href="{% url 'authorization:termuse' %}">                        
+                        利用規約
+                      </a>
+                    </li> 
                     <li>
                       <a class="dropdown-item" href="{% url 'authorization:twitter_logout' %}">                        
                         ログアウト

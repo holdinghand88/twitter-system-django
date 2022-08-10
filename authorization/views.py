@@ -164,7 +164,10 @@ class TwitterAccountView(auth_views.LoginView):
                 context['accounts'] = TwitterAccount.objects.filter(user=self.request.user)
         return context
         
-
+def termview(request):
+    template_name = "registration/termuse.html" 
+    
+    return render(request, template_name)
 
 @login_required
 @twitter_login_required
@@ -174,5 +177,10 @@ def index(request):
 
 @login_required
 def twitter_logout(request):
+    logout(request)
+    return redirect('authorization:login')
+
+@login_required
+def logout_c(request):
     logout(request)
     return redirect('authorization:login')
