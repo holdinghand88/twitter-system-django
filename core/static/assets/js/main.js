@@ -20,14 +20,21 @@ $('body').on('click','.purchase', function () {
      fetch("/create-checkout-session/?plan_id="+plan_id)
     .then((result) => { return result.json();})
     .then((data) => {
+      if(data.email){
+        alert("メールアドレスをご記入ください！");
+        window.location = '/authorization/profile/';
+      }
+      if(data.error){
+        alert("stripe接続状態を確認してください！");
+        window.location = '/payment/';
+      }
       if(data.success){
-          window.location = '/payment/success?plan_id=1';
-      }else{
-          alert("メールアドレスをご記入ください！");
-          return stripe.redirectToCheckout({sessionId: data.sessionId})
+        window.location = '/payment/success?plan_id=1';
+      }else{          
+        return stripe.redirectToCheckout({sessionId: data.sessionId})
       }
     })
-    .then((res) => {
-      console.log(res);      
+    .then((res) => {      
+      console.log(res);
     });
 })

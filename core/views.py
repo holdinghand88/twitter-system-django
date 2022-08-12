@@ -636,7 +636,7 @@ def create_checkout_session(request):
         if request.user.email == '':
             messages.add_message(request, messages.SUCCESS, 'メールアドレスをご記入ください！')
             email = 'example@domain.com'
-            return JsonResponse({'error': 'error'})
+            return JsonResponse({'email': 'error'})
         else:
             email = request.user.email
         print(request.user.email)
