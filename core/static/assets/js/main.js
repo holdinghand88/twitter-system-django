@@ -28,7 +28,6 @@ $('body').on('click','.purchase', function () {
       }
     })
     .then((res) => {
-      console.log(res);
-      alert("メールアドレスをご記入ください！");
+      console.log(res);      
     });
 })
