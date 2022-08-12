@@ -102,5 +102,26 @@
 <script>
     $(document).ready(function() {
     } );
+    $("#change_user").click(function(){
+      var last_name = $("#id_last_name").val();
+      var first_name = $("#id_first_name").val();
+      var email = $("#id_email").val();
+      $.ajax({
+        url : '{% url 'authorization:change_user' %}',
+        data:{
+          last_name : last_name,
+          first_name : first_name,
+          email : email,
+          csrfmiddlewaretoken: "{{ csrf_token }}"
+        },
+        type:'POST',
+        success:function(data){
+          alert("成功的に変更されました。");
+          $("#id_last_name").val(last_name);
+          $("#id_first_name").val(first_name);
+          $("#id_email").val(email);
+        }
+      });
+    });
 </script>
 {% endblock %}

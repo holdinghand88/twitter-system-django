@@ -32,7 +32,7 @@ class FilterUserMiddleware(MiddlewareMixin):
                     today = date.today()
                     delta_day = today - joined_date
                     print(delta_day)
-                    if delta_day.days > 10:
+                    if delta_day.days > 30:
                         if request.user.twitteruser.is_notified:
                             print("already sent")
                             return redirect("core:payment")
