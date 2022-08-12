@@ -14,7 +14,7 @@ urlpatterns = [
     path('twitter_logout/', views.twitter_logout, name='twitter_logout'),
     path('logout/',views.logout_c,name='logout'),
     path('profile/', views.ProfileUpdateView.as_view(), name="profile"),
-    
+    path('change_user/', views.change_user, name="change_user"),
     path('twitteraccount/', views.TwitterAccountView.as_view(), name="twitteraccount"),
     path('termofuse/', views.termview, name="termuse"),
 ]

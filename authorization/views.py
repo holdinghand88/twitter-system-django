@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, reverse, HttpResponseRedirect, HttpResponse
+from django.http import JsonResponse
 from .decorators import twitter_login_required
 from .models import TwitterAuthToken, TwitterUser,TwitterAccount
 from .authorization import create_update_user_from_twitter, check_token_still_valid
@@ -184,3 +185,20 @@ def twitter_logout(request):
 def logout_c(request):
     logout(request)
     return redirect('authorization:login')
+
+@login_required
+def change_user(request):
+    email = request.POST.get('email')
+    email_exists = User.objects.filter(email=email).exclude(id=request.user.id)
+    if email_exists.exists():
+        return JsonResponse({'success':False})
+    else:
+        lastname = request.POST.get('last_name')
+        firstname = request.POST.get('first_name')
+        user = request.user
+        user.last_name = lastname
+        user.first_name = firstname
+        user.email = email
+        user.save()
+        
+        return JsonResponse({'success':True})
