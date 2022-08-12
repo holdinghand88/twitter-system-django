@@ -23,10 +23,12 @@ $('body').on('click','.purchase', function () {
       if(data.success){
           window.location = '/payment/success?plan_id=1';
       }else{
+          alert("メールアドレスをご記入ください！");
           return stripe.redirectToCheckout({sessionId: data.sessionId})
       }
     })
     .then((res) => {
       console.log(res);
+      alert("メールアドレスをご記入ください！");
     });
 })

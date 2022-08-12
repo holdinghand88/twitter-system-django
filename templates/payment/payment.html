@@ -45,7 +45,11 @@
                                     <p>無制限</p>
                                 </div>
                                 <div class="card-footer">
+                                    {% if plan2 == 'purchased' %}
+                                    <button disabled class="btn btn-primary purchase" data-id="2">お申込み</button>
+                                    {% else %}
                                     <button class="btn btn-primary purchase" data-id="2">お申込み</button>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>

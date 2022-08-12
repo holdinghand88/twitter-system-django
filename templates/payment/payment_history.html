@@ -26,7 +26,7 @@
                             <thead class="card-header py-3">
                                 <th>作成日</th>
                                 <th>ユーザー</th>
-                                <th>ストレージ</th>
+                                <th>プラン</th>
                                 <th>プライス</th>
                             </thead>
                             <tbody>
@@ -34,7 +34,13 @@
                                 <tr>
                                     <td>{{ payment.created }}</td>
                                     <td>{{ payment.user.username }}</td>
-                                    <td>{{ payment.storage }}</td>
+                                    <td>
+                                        {% if payment.storage == 0 %}
+                                        フリープラン
+                                        {% elif payment.storage == 2 %}
+                                        ライトプラン
+                                        {% endif %}
+                                    </td>
                                     <td>
                                         {% if payment.price == 0 %}
                                             Free

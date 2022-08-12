@@ -49,11 +49,13 @@ class HomeView(auth_views.LoginView):
                 client = twitter_api.client_init(twitter_auth_token.oauth_token, twitter_auth_token.oauth_token_secret)
                 
                 info = twitter_api.get_me(client)
-                print(info[0]['public_metrics'])                             
+                #print(self.request.user.email)                             
                 context['followers_count'] = info[0]['public_metrics']['followers_count']            
                 context['following_count'] = info[0]['public_metrics']['following_count']
-                context['logs'] = LogoUserAction.objects.filter(user=self.request.user).order_by('-pub_date')                
-                context['liked_tweets'] = info[0]['public_metrics']['listed_count']    
+                context['logs'] = LogoUserAction.objects.filter(user=self.request.user).order_by('-pub_date')
+                liked_tweets = twitter_api.get_liked_tweets(twitter_user.twitter_id,client)
+                #print(liked_tweets[3]['result_count'])
+                context['liked_tweets'] = liked_tweets[3]['result_count']
                 max_result = 5
                 _tweets = twitter_api.get_users_tweets(twitter_user.twitter_id,client,max_result)                
                 context['tweets'] = _tweets[0]
@@ -105,7 +107,8 @@ def HashTagDelete(request,pk):
     hashtag = keywords.objects.filter(id=pk)
     hashtag.delete()
     return redirect("core:hashtag")
-                
+
+               
 class AutoLikeView(auth_views.LoginView):
     model = keywords
     template_name = "autolike.html"
@@ -583,11 +586,21 @@ def unfollow(request,pk):
 
 ##################=======  プラン ===========##########
 def payment(request):
-    return render(request, 'payment/payment.html', context={})
+    context = {}
+    try:
+        plan2 = PaymentHistory.objects.filter(user=request.user, storage=2).first()
+        if len(plan2) > 0:
+            context['plan2'] = 'purchased'
+        else:
+            context['plan2'] = ''
+    except:
+        context['plan2'] = ''
+    
+    return render(request, 'payment/payment.html', context)
 
 @login_required
 def payment_history(request):
-    payment_history = PaymentHistory.objects.all()
+    payment_history = PaymentHistory.objects.filter(user=request.user)
     return render(request, 'payment/payment_history.html', context={'payment_history':payment_history})
 
 @csrf_exempt
@@ -615,18 +628,25 @@ def create_checkout_session(request):
             payment.save()
             return JsonResponse({'success':True})
         if plan_id=='2':
-            name = '100￥'
-            price = 100
-        print(price)
-        # domain_url = 'http://localhost:8003/'
+            name = '月'
+            price = 500
+        
+        #domain_url = 'http://127.0.0.1:8003/'
         domain_url = request.scheme+'://'+request.META['HTTP_HOST']+'/'
+        if request.user.email == '':
+            messages.add_message(request, messages.SUCCESS, 'メールアドレスをご記入ください！')
+            email = 'example@domain.com'
+            return JsonResponse({'error': 'error'})
+        else:
+            email = request.user.email
+        print(request.user.email)
         stripe.api_key = STRIPE_SECRET_KEY
         try:
             checkout_session = stripe.checkout.Session.create(
                 success_url=domain_url + 'payment/success?session_id={CHECKOUT_SESSION_ID}&plan_id='+plan_id,
                 cancel_url=domain_url + 'payment',
                 payment_method_types=['card'],
-                customer_email=request.user.email,
+                customer_email=email,
                 mode='payment',
                 locale='ja',
                 line_items=[
@@ -642,6 +662,7 @@ def create_checkout_session(request):
             )
             return JsonResponse({'sessionId': checkout_session['id']})
         except Exception as e:
+            print(e)
             return JsonResponse({'error': str(e)})
 
 @csrf_exempt
@@ -668,26 +689,24 @@ def stripe_webhook(request):
         user = User.objects.get(id=user_id)
         plan_id = int(data['metadata']['plan_id'])
 
-        if int(plan_id) == 2:            
+        if int(plan_id) == 2:
+            print("Payment Success!")
             payment = PaymentHistory()
             payment.user = user
-            payment.storage = 5368706371
-            payment.price = 100
+            payment.storage = 2
+            payment.price = 500
             payment.save()
 
 
     return HttpResponse(status=200)
 
 class SuccessView(TemplateView):
-    template_name = 'payment_success.html'
+    template_name = 'payment/payment_success.html'
 
     def get(self, request, *args, **kwargs):
         plan_id = request.GET.get('plan_id')
-        if plan_id == '1':
-            file_space = 4000
-        elif plan_id == '2':
-            file_space = 5368706371
-        return render(request,self.template_name,{'file_space':file_space})
+        
+        return render(request,self.template_name)
 
 class CancelledView(TemplateView):
     template_name = 'payment/payment_cancelled.html'
