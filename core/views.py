@@ -557,8 +557,9 @@ class FollowerView(auth_views.LoginView):
             #following_l = api.get_friend_ids(tuser_id=twitter_user.twitter_id,count=5000)
             followers_info = twitter_api.get_users_followers(twitter_user.twitter_id,client,1000)                  
             following_ids = []
-            for following in following_info[0]:
-                following_ids.append(following.id)
+            if following_info[0] is not None:
+                for following in following_info[0]:
+                    following_ids.append(following.id)
             context['followings'] = following_ids
             context['followers'] = followers_info[0]
             #print(following_l)     
@@ -629,7 +630,7 @@ def create_checkout_session(request):
             return JsonResponse({'success':True})
         if plan_id=='2':
             name = '月'
-            price = 500
+            price = 2980
         
         #domain_url = 'http://127.0.0.1:8003/'
         domain_url = request.scheme+'://'+request.META['HTTP_HOST']+'/'
@@ -681,7 +682,7 @@ def stripe_webhook(request):
         return HttpResponse(status=400)
     except stripe.error.SignatureVerificationError as e:
         return HttpResponse(status=400)
-
+    print(event)
     if event['type'] == 'checkout.session.completed':
 
         data = event['data']['object']
