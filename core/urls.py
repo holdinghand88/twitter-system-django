@@ -11,12 +11,12 @@ urlpatterns = [
      path('hashtag/<int:pk>/delete',HashTagDelete, name="hashtagdelete"),
      
      ## BOT
-     path('autolike/',AutoLikeView.as_view(), name="autolike"),
+     path('autolike',AutoLikeView.as_view(), name="autolike"),
      path('autolike/start',autolikestart, name="autolikestart"),
      path('autolike/stop',autolikestop, name="autolikestop"),
      path('autolike/setting',save_autolike_setting, name="autolikesetting"),
-     path('autoretweet/',AutoRetweetView.as_view(), name="autoretweet"),
-     path('autofollow/',AutoFollowView.as_view(), name="autofollow"),
+     path('autoretweet',AutoRetweetView.as_view(), name="autoretweet"),
+     path('autofollow',AutoFollowView.as_view(), name="autofollow"),
      
      ### History
      path('history/all',HistoryAllView.as_view(), name="historyall"),

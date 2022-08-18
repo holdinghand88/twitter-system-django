@@ -16,6 +16,7 @@ from authorization.models import TwitterAuthToken, TwitterUser
 from .models import keywords,DraftTweets,AssetModel,NotificationSettings,LogoUserAction,AutoLikeSetting,PaymentHistory
 from .forms import AddKeywordForm,NotificationSettingForm,DraftForm,DraftFileForm,PostingTimeForm
 from .utils import autolike,autoretweet,autofollow
+from .permission import PaymentCheck
 import time
 import random
 import datetime
@@ -139,7 +140,7 @@ class AutoLikeView(auth_views.LoginView):
             client = twitter_api.client_init(twitter_auth_token.oauth_token, twitter_auth_token.oauth_token_secret)
             info = twitter_api.get_me(client)
             liked_tweets = twitter_api.get_liked_tweets(twitter_user.twitter_id,client)            
-            context['liked_count'] = info[0]['public_metrics']['listed_count'] 
+            context['liked_count'] = liked_tweets[3]['result_count']
             context['liked_tweets'] = liked_tweets[0]
         return context
 
@@ -232,7 +233,7 @@ def autolikestart(request):
                                 if user_id != '':
                                     LogoUserAction.objects.create(user=request.user, action_code=action_code, target_id=user_id, action_param='自動フォロー。')
                                 time.sleep(30)
-                            #time.sleep(random.randint(int(frequency_time/2), int(frequency_time*2)))
+                            time.sleep(random.randint(int(frequency_time/2), int(frequency_time*2)))
                         except:
                             break
                     else:
@@ -317,41 +318,6 @@ class NotificationSettingAPI(LoginRequiredMixin, View):
                 messages.warning(self.request, "You do not have an active order")
                 return redirect("/")
             return redirect("/")
-        else:
-            messages.warning(self.request, "Invalid Form")
-            return redirect("/")
-        
-class DraftTweetAPI(LoginRequiredMixin, View):
-    model = DraftTweets
-    form_class = DraftForm
-    template_name = "drafttweets.html"
-    success_url = reverse_lazy('core:drafttweet')
-    
-    def get(self, request, *args, **kwargs):
-        drafttweets = DraftTweets.objects.get(user=request.user)
-        context = {
-            'drafttweets': drafttweets
-        }
-        return render(self.request, "drafttweets.html", context)
-    
-    def post(self, request, *args, **kwargs):
-        form = self.form_class(request.POST)
-        file_form = DraftFileForm(request.POST)
-        if form.is_valid():
-            form.instance.user = request.user
-            drafttweet = form.save()
-            if request.FILES:
-                for file in request.FILES:
-                    file = request.FILES[file]
-                    draft_file = AssetModel(asset_file=file)
-                    draft_file.drafttweet = drafttweet
-                    draft_file.save()
-                resp = HttpResponse(f'{{"message": "Uploaded successfully...", "id": "{drafttweet}"}}')
-                resp.status_code = 200
-                resp.content_type = "application/json"
-                return resp
-            else:
-                return redirect("core:drafttweet")
         else:
             messages.warning(self.request, "Invalid Form")
             return redirect("/")
@@ -661,6 +627,11 @@ def create_checkout_session(request):
                 metadata={'plan_id':plan_id},
                 client_reference_id = request.user.id
             )
+            payment = PaymentHistory()
+            payment.user = user
+            payment.storage = 2
+            payment.price = price
+            payment.save()
             return JsonResponse({'sessionId': checkout_session['id']})
         except Exception as e:
             print(e)
@@ -690,13 +661,13 @@ def stripe_webhook(request):
         user = User.objects.get(id=user_id)
         plan_id = int(data['metadata']['plan_id'])
 
-        if int(plan_id) == 2:
-            print("Payment Success!")
-            payment = PaymentHistory()
-            payment.user = user
-            payment.storage = 2
-            payment.price = 500
-            payment.save()
+        # if int(plan_id) == 2:
+        #     print("Payment Success!")
+        #     payment = PaymentHistory()
+        #     payment.user = user
+        #     payment.storage = 2
+        #     payment.price = 2980
+        #     payment.save()
 
 
     return HttpResponse(status=200)

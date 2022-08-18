@@ -21,47 +21,49 @@ class FilterUserMiddleware(MiddlewareMixin):
    
     def process_request(self, request):
         if request.path != '/payment':
-            user = request.user
-            try:
-                paid_user = PaymentHistory.objects.get(user=user)
-                return None
-            except:
-                if request.user.is_authenticated:
-                    joined_date = request.user.date_joined
-                    joined_date = joined_date.date()
-                    today = date.today()
-                    delta_day = today - joined_date
-                    print(delta_day)
-                    if delta_day.days > 30:
-                        if request.user.twitteruser.is_notified:
-                            print("already sent")
-                            return redirect("core:payment")
-                        else:
-                            profile = TwitterUser.objects.get(user=user)
-                            profile.is_notified = True
-                            profile.save()
-                            user_id = request.user.id
-                            to_email = request.user.email
-                            p_name = request.user.last_name
-                            url = reverse_lazy('core:payment')
-                            confirm_url = request.build_absolute_uri(url)
-                            subject = request.user.last_name + '様プランをアップグレードする必要があります。'
-                            html_body = render_to_string("payment/plan_email.html", {'url':confirm_url, 'username':p_name})        
-                            print(confirm_url)
-                            message = Mail(
-                                from_email=EMAIL_FROM,
-                                to_emails=to_email,
-                                subject=subject,
-                                html_content=html_body)
-                            
-                            try:
-                                sg = SendGridAPIClient(SENDGRID_API_KEY)
-                                response = sg.send(message)
-                                #print(response)
-                            except Exception as e:
-                                print(e)
-                            return redirect("core:payment")
-                        #raise Http404 
+            if request.path == '/autolike' or request.path == '/autoretweet' or request.path == '/autofollow':
+                user = request.user
+                try:
+                    paid_user = PaymentHistory.objects.get(user=user)
+                    return None
+                except:
+                    if request.user.is_authenticated:
+                        joined_date = request.user.date_joined
+                        joined_date = joined_date.date()
+                        today = date.today()
+                        delta_day = today - joined_date
+                        print(delta_day)
+                        return redirect("core:payment")
+                        # if delta_day.days > 30:
+                        #     if request.user.twitteruser.is_notified:
+                        #         print("already sent")
+                        #         return redirect("core:payment")
+                        #     else:
+                        #         profile = TwitterUser.objects.get(user=user)
+                        #         profile.is_notified = True
+                        #         profile.save()
+                        #         user_id = request.user.id
+                        #         to_email = request.user.email
+                        #         p_name = request.user.last_name
+                        #         url = reverse_lazy('core:payment')
+                        #         confirm_url = request.build_absolute_uri(url)
+                        #         subject = request.user.last_name + '様プランをアップグレードする必要があります。'
+                        #         html_body = render_to_string("payment/plan_email.html", {'url':confirm_url, 'username':p_name})        
+                        #         print(confirm_url)
+                        #         message = Mail(
+                        #             from_email=EMAIL_FROM,
+                        #             to_emails=to_email,
+                        #             subject=subject,
+                        #             html_content=html_body)
+                                
+                        #         try:
+                        #             sg = SendGridAPIClient(SENDGRID_API_KEY)
+                        #             response = sg.send(message)
+                        #             #print(response)
+                        #         except Exception as e:
+                        #             print(e)
+                        #         return redirect("core:payment")
+                            #raise Http404 
 
-                
-                return None
+                    
+                    return None
