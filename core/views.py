@@ -20,12 +20,13 @@ from .permission import PaymentCheck
 import time
 import random
 import datetime
+import calendar
 import pytz
 import json
 import os
 import threading
 import stripe
-from config.settings import STRIPE_PUBLISHABLE_KEY,STRIPE_SECRET_KEY,STRIPE_ENDPOINT_SECRET
+from config.settings import STRIPE_PUBLISHABLE_KEY,STRIPE_SECRET_KEY,STRIPE_ENDPOINT_SECRET,STRIPE_PRICE_ID
 
 class HomeView(auth_views.LoginView):
     template_name = "home.html"    
@@ -45,25 +46,28 @@ class HomeView(auth_views.LoginView):
             if self.request.user.is_superuser:
                 context['users'] = User.objects.all().order_by('-date_joined')
             else:
-                twitter_user = get_object_or_404(TwitterUser,user=self.request.user)
-                twitter_auth_token = get_object_or_404(TwitterAuthToken, id=twitter_user.twitter_oauth_token.id)
-                client = twitter_api.client_init(twitter_auth_token.oauth_token, twitter_auth_token.oauth_token_secret)
-                
-                info = twitter_api.get_me(client)
-                #print(self.request.user.email)                             
-                context['followers_count'] = info[0]['public_metrics']['followers_count']            
-                context['following_count'] = info[0]['public_metrics']['following_count']
-                context['logs'] = LogoUserAction.objects.filter(user=self.request.user).order_by('-pub_date')
-                liked_tweets = twitter_api.get_liked_tweets(twitter_user.twitter_id,client)
-                #print(liked_tweets[3]['result_count'])
-                context['liked_tweets'] = liked_tweets[3]['result_count']
-                max_result = 5
-                _tweets = twitter_api.get_users_tweets(twitter_user.twitter_id,client,max_result)                
-                context['tweets'] = _tweets[0]
-                context['tweets_count'] = info[0]['public_metrics']['tweet_count']
-                following_info = twitter_api.get_users_following(twitter_user.twitter_id,client,10)
-                context['followings'] = following_info[0]
+                try:
+                    twitter_user = get_object_or_404(TwitterUser,user=self.request.user)
+                    twitter_auth_token = get_object_or_404(TwitterAuthToken, id=twitter_user.twitter_oauth_token.id)
+                    client = twitter_api.client_init(twitter_auth_token.oauth_token, twitter_auth_token.oauth_token_secret)
+                    
+                    info = twitter_api.get_me(client)
+                    #print(self.request.user.email)                             
+                    context['followers_count'] = info[0]['public_metrics']['followers_count']            
+                    context['following_count'] = info[0]['public_metrics']['following_count']
+                    context['logs'] = LogoUserAction.objects.filter(user=self.request.user).order_by('-pub_date')
+                    liked_tweets = twitter_api.get_liked_tweets(twitter_user.twitter_id,client)
+                    #print(liked_tweets[3]['result_count'])
+                    context['liked_tweets'] = liked_tweets[3]['result_count']
+                    max_result = 5
+                    _tweets = twitter_api.get_users_tweets(twitter_user.twitter_id,client,max_result)                
+                    context['tweets'] = _tweets[0]
+                    context['tweets_count'] = info[0]['public_metrics']['tweet_count']
+                    following_info = twitter_api.get_users_following(twitter_user.twitter_id,client,10)
+                    context['followings'] = following_info[0]
                 #print(context['followings'])
+                except:
+                    pass
             
         return context
 
@@ -93,9 +97,11 @@ class GetHashTag(auth_views.LoginView):
         form = AddKeywordForm(request.POST)
         if form.is_valid():
             keyword = form.cleaned_data['keyword']
+            action_code = form.cleaned_data['action_code']
             if keyword is not None:
                 hashtag = keywords()
                 hashtag.keyword = keyword
+                hashtag.action_code = action_code
                 hashtag.user = request.user
                 hashtag.save()
                 return redirect('core:hashtag')
@@ -126,7 +132,7 @@ class AutoLikeView(auth_views.LoginView):
         context = super(AutoLikeView, self).get_context_data(**kwargs)
         if self.request.user.is_authenticated:
             try:
-                context['hashtags'] = keywords.objects.filter(user=self.request.user)
+                context['hashtags'] = keywords.objects.filter(user=self.request.user).filter(action_code=1)
             except:
                 context['hashtags'] = []
             try:
@@ -188,7 +194,7 @@ def autolikestart(request):
         try:
             action_code =  int(request.POST.get('action_code'))
             likesetting = AutoLikeSetting.objects.get(user=request.user, action_code=action_code)
-            hashtags = keywords.objects.filter(user=request.user)
+            hashtags = keywords.objects.filter(user=request.user).filter(action_code=action_code)
         except:
             resp = HttpResponse(f'{{"message": "failed"}}')
             resp.status_code = 400
@@ -607,6 +613,11 @@ def create_checkout_session(request):
         else:
             email = request.user.email
         print(request.user.email)
+        dt = time.gmtime()
+        print(dt)
+        ts = calendar.timegm(dt)
+        print(ts)
+        timestamp_delta = ts + 7 * 24 * 60 * 60 + 9 * 60 * 60
         stripe.api_key = STRIPE_SECRET_KEY
         try:
             checkout_session = stripe.checkout.Session.create(
@@ -614,19 +625,35 @@ def create_checkout_session(request):
                 cancel_url=domain_url + 'payment',
                 payment_method_types=['card'],
                 customer_email=email,
-                mode='payment',
+                mode='subscription',
                 locale='ja',
                 line_items=[
                     {
-                        'name': name,
-                        'quantity': 1,
-                        'currency': 'JPY',
-                        'amount': int(price),
+                        'price': STRIPE_PRICE_ID,
+                        "quantity": 1,
                     }
                 ],
+                
                 metadata={'plan_id':plan_id},
+                subscription_data={
+                    'trial_end':int(timestamp_delta)
+                },
                 client_reference_id = request.user.id
             )
+            # customer = stripe.Customer.create(
+            #     email = email
+                
+            # )
+            # print(customer['id'])
+            # checkout_session = stripe.Subscription.create(                
+            #     customer=customer['id'],
+            #     items=[
+            #         {
+            #         'price': STRIPE_PRICE_ID,
+            #         },
+            #     ],
+            #     trial_end=1661299200,
+            # )
             payment = PaymentHistory()
             payment.user = user
             payment.storage = 2

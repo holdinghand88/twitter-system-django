@@ -88,13 +88,16 @@ def twitter_callback(request):
             twitter_auth_token.oauth_token_secret = access_token_secret
             twitter_auth_token.save()
             # Create user
-            client = twitter_api.client_init(access_token, access_token_secret)
-            info = twitter_api.get_me(client)
-            if info is not None:
-                twitter_user_new = TwitterUser(twitter_id=info[0]['id'], screen_name=info[0]['username'],
-                                               name=info[0]['name'], profile_image_url=info[0]['profile_image_url'])
+            #client = twitter_api.client_init(access_token, access_token_secret)
+            #info = twitter_api.get_me(client)
+            api = twitter_api.api_init(access_token, access_token_secret)
+            info1 = api.verify_credentials(include_email=True)
+            #print(info1.id)
+            if info1 is not None:
+                #twitter_user_new = TwitterUser(twitter_id=info[0]['id'], screen_name=info[0]['username'],name=info[0]['name'], profile_image_url=info[0]['profile_image_url'])
+                twitter_user_new = TwitterUser(twitter_id=info1.id, screen_name=info1.screen_name,name=info1.name, profile_image_url=info1.profile_image_url)
                 twitter_user_new.twitter_oauth_token = twitter_auth_token
-                user, twitter_user = create_update_user_from_twitter(twitter_user_new)
+                user, twitter_user = create_update_user_from_twitter(twitter_user_new,info1.email)
                 if user is not None:
                     login(request, user)
                     return redirect('core:homepage')

@@ -40,8 +40,16 @@
                                         <div class="modal-body">
                                             {% csrf_token %}
                                             <div class="form-group">
-                                                <label>タグ名</label>
-                                                <input type="text" class="form-control" name="keyword" placeholder="sport">
+                                                <label>ハッシュタグ名</label>
+                                                <input type="text" name="keyword" placeholder="sport">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>アクション</label>
+                                                <select name="action_code">
+                                                    <option value='1'>いいね</option>
+                                                    <option value='2'>リツイート</option>
+                                                    <option value='3'>フォロー</option>
+                                                </select>
                                             </div>
                                         </div>                                     
                                         <div class="modal-footer">
@@ -56,7 +64,8 @@
                         <table class="table table-hover table-scrollable">
                             <thead class="card-header py-3">                                
                                 <th>No</th>
-                                <th>タグ名</th>
+                                <th>ハッシュタグ名</th>
+                                <th>アクション</th>
                                 <th></th>
                             </thead>
                             <tbody>                                
@@ -64,6 +73,14 @@
                                 <tr>
                                     <td>{{ forloop.counter}}</td>
                                     <td>{{ hashtag.keyword }}</td>
+                                    <td>{% if hashtag.action_code == 1 %}
+                                        いいね
+                                        {% elif hashtag.action_code == 2 %}
+                                        リツイート
+                                        {% else %}
+                                        フォロー
+                                        {% endif %}
+                                    </td>
                                     <td><button data-toggle="modal" data-target="#deletemodal_{{ hashtag.id }}" class="btn btn-danger btn-sm" ><i class="fa fa-times"></i></button>
                                         <div class="modal fade" id="deletemodal_{{ hashtag.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered" role="document">
