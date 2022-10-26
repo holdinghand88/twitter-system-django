@@ -16,7 +16,13 @@ class UserPreference(models.Model):
     option = models.CharField(max_length=255)
 
 class keywords(models.Model):
-    keyword = models.CharField(max_length=1000)
+    """action_code: 
+    1: autolike
+    2: autoretweet
+    3: autofollow    
+    """
+    keyword = models.CharField(max_length=256)
+    action_code = models.IntegerField(default=1)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     
     def __str__(self):

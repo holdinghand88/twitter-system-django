@@ -57,7 +57,7 @@ class TwitterAPI:
     
     def get_me(self, client):
         try:
-            info = client.get_me(user_auth=True,expansions='pinned_tweet_id',user_fields=['public_metrics','profile_image_url'])
+            info = client.get_me(user_auth=True,expansions='pinned_tweet_id',user_fields=['public_metrics','profile_image_url','protected','location','entities','withheld','verified'])
             return info
         except Exception as e:
             print(e)

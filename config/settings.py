@@ -209,7 +209,7 @@ else:
     STRIPE_PUBLISHABLE_KEY = 'pk_test_51LNkD7KqobOw2dYyp9cXizHz7c8uAQT6s2tBEtb0StBw8YhNhuFpAk37gH47R5aTvUCXsYLwUzXkYrxDPmTDxaDq00uLpF2SkR'
     STRIPE_SECRET_KEY = 'sk_test_51LNkD7KqobOw2dYydWqhezdOcKziDNorRNqCJIQl4fGsq1MsAj8nI1JIWyYbtUP0mhuTKF7b4a15Ie8b9e1QSnEF00NJsENpVC'
     STRIPE_ENDPOINT_SECRET = 'we_1LUhrgKqobOw2dYyM5lfn0Vs'
-    STRIPE_PRICE_ID = 'price_1LUMbsKqobOw2dYyc4UtUQjG'
+    STRIPE_PRICE_ID = 'price_1LUMoeKqobOw2dYyYZPrEiYD'
     
     bearer_token = config('BEARER_TOKEN')
     api_key = config('TWITTER_API_KEY')

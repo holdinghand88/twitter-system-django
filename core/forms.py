@@ -3,6 +3,7 @@ from .models import DraftTweets,AssetModel
 
 class AddKeywordForm(forms.Form):
     keyword = forms.CharField(required=True)
+    action_code = forms.IntegerField(required=True)
     
 class NotificationSettingForm(forms.Form):
     retrieval = forms.BooleanField(required=True)
