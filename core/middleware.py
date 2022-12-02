@@ -24,7 +24,7 @@ class FilterUserMiddleware(MiddlewareMixin):
             if request.path == '/autolike' or request.path == '/autoretweet' or request.path == '/autofollow':
                 user = request.user
                 try:
-                    paid_user = PaymentHistory.objects.get(user=user)
+                    paid_user = PaymentHistory.objects.filter(user=user).first()
                     return None
                 except:
                     if request.user.is_authenticated:
