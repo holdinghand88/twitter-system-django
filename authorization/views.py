@@ -12,7 +12,7 @@ from django.views.generic.edit import UpdateView
 from django.contrib.auth.models import User
 from django.contrib.auth import views as auth_views
 from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.forms import PasswordChangeForm,SetPasswordForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import UserCreateForm, ProfiledAuthenticationForm, UserUpdateForm
 from django.contrib import messages
@@ -23,24 +23,26 @@ class LoginView(View):
     form_class = ProfiledAuthenticationForm
     
     def get_success_url(self):
-        return reverse('authorization:index')
+        return reverse('core:homepage')
     
     def get(self, request, *args, **kwargs):
         
         context = {'form': self.form_class()}
         if self.request.user.is_authenticated:
-            return render(request, 'home.html')
+            return redirect('core:homepage')
         else:
             return render(request,self.template_name,context)
         
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
+        print(form)
         if form.is_valid():
             
             user = authenticate(
                 username=form.cleaned_data['username'],
                 password=form.cleaned_data['password'],
             )
+            
             if user is not None:
                 login(request, user)                
                 return HttpResponseRedirect(self.get_success_url())
@@ -125,7 +127,7 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context = super(ProfileUpdateView, self).get_context_data(**kwargs)
         if 'pw_form' not in context:
-            context['pw_form'] = PasswordChangeForm(user=self.request.user)
+            context['pw_form'] = SetPasswordForm(user=self.request.user)
         context['form'] = self.form_class(instance=self.get_object())
         print(context)
         return context
@@ -136,7 +138,8 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
 
         if 'pw_form' in request.POST:
             print("Checking pw form")
-            pw_form = PasswordChangeForm(user=request.user, data=request.POST)
+            pw_form = SetPasswordForm(user=request.user, data=request.POST)
+            print(pw_form)
             if pw_form.is_valid():
                 print("pw_form is valid")
                 messages.add_message(self.request, messages.SUCCESS, 'Password changed successfully.')
