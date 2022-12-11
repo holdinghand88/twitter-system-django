@@ -83,12 +83,12 @@ class ProfiledAuthenticationForm(AuthenticationForm):
         ),
         
     }
-    # def clean(self):
-    #     super(ProfiledAuthenticationForm, self).clean()
-    #     if self.user_cache:
-    #         if not self.user_cache.twitteruser.can_login:
-    #             raise forms.ValidationError(
-    #                 self.profile_error_messages['invalid_profile'],
-    #                 code='invalid_profile',
-    #                 params={'username': self.username_field.verbose_name},
-    #             )
+    def clean(self):
+        super(ProfiledAuthenticationForm, self).clean()
+        # if self.user_cache:
+        #     if not self.user_cache.twitteruser.can_login:
+        #         raise forms.ValidationError(
+        #             self.profile_error_messages['invalid_profile'],
+        #             code='invalid_profile',
+        #             params={'username': self.username_field.verbose_name},
+        #         )

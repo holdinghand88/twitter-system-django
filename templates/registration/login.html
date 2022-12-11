@@ -29,13 +29,10 @@
           <img src="{% static 'assets/img/logo_large.png' %}" alt="logo" class="img-fluid" />
         </a>
       </div>
-      <form class="login-form" action="" method="POST">
+      <form class="login-form" action="{% url 'authorization:login'%}" method="POST">
         {% csrf_token %}
-        {{ form|crispy }}
+        {{ form|crispy }}        
         
-        <div class="forgot">
-          <a href="#">パスワードをお忘れですか？</a>
-        </div>
         <div class="buttons">
           <button type="submit" class="btn btn-primary">ログインする</button>
           <span class="divider">or</span>

@@ -62,10 +62,7 @@
                         {% csrf_token %}
       
                         {#{{ pw_form|crispy }}#}
-                        <div class="form-row">
-                          <div class="form-group col-md-12 mb-0">
-                            {{ pw_form.old_password|as_crispy_field }}
-                          </div>
+                        <div class="form-row">                          
                         </div>
                         <div class="form-row">
                           <div class="form-group col-md-12 mb-0">
